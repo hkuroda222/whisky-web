@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import { signInUserAtom } from '@/recoil/atom/signInuserAtom';
+import { auth } from '../firebase/config';
 
-export const useObserveIsLogin = () => {
+export const useAuth = () => {
   const [signInUser, setSignInUser] = useRecoilState(signInUserAtom);
   const resetStatus = useResetRecoilState(signInUserAtom);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setSignInUser({
           uid: user.uid,

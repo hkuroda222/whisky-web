@@ -14,14 +14,17 @@ export const signInWithEmail = async (args: { mail: string; pass: string }) => {
   }
 };
 
-export const signUpWithEmail = async (args: {
-  email: string;
-  password: string;
-}) => {
+export const signUpWithEmail = async (args: { mail: string; pass: string }) => {
   try {
-    await createUserWithEmailAndPassword(auth, args.email, args.password);
+    const user = await createUserWithEmailAndPassword(
+      auth,
+      args.mail,
+      args.pass
+    );
+    return user;
   } catch (error) {
     alert('ユーザー登録に失敗しました。');
+    return false;
   }
 };
 
