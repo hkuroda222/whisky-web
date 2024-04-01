@@ -3,17 +3,25 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Input } from '@/components/elements/input';
 import { Button } from '@/components/elements/button';
-import { signInWithEmail } from '@/libs/firebase/api/auth';
+import { signUpWithEmail } from '@/libs/firebase/api/auth';
 
 const SignIn = () => {
-  const [loginInfo, setLoginInfo] = useState<{ mail: string; pass: string }>({
+  const [signupInfo, setSignupInfo] = useState<{
+    mail: string;
+    pass: string;
+    confirmPass: string;
+  }>({
     mail: '',
     pass: '',
+    confirmPass: '',
   });
   const router = useRouter();
 
   const onSubmit = async () => {
-    const user = await signInWithEmail(loginInfo);
+    const user = await signUpWithEmail({
+      mail: signupInfo.mail,
+      pass: signupInfo.pass,
+    });
     if (user) {
       router.push('list');
     }
@@ -23,14 +31,13 @@ const SignIn = () => {
     <div className="h-screen flex justify-center items-center px-3">
       <div className="flex flex-col justify-center items-center px-4 py-14 max-w-screen-md w-full h-1/2 bg-white border-solid border-2 rounded">
         <div className="max-w-md w-full">
-          <h1 className="font-bold text-center text-2xl">ログイン</h1>
-          {/* <span className="block mt-2">メールアドレスでログインする</span> */}
+          <h1 className="font-bold text-center text-2xl">新規会員登録</h1>
           <div className="mt-2">
             <Input
               type="email"
-              value={loginInfo.mail}
+              value={signupInfo.mail}
               onChange={(e) =>
-                setLoginInfo({ ...loginInfo, mail: e.target.value })
+                setSignupInfo({ ...signupInfo, mail: e.target.value })
               }
               label="メールアドレス"
               placeholder="sample@taster.com"
@@ -39,21 +46,33 @@ const SignIn = () => {
           <div className="mt-4">
             <Input
               type="password"
-              value={loginInfo.pass}
+              value={signupInfo.pass}
               onChange={(e) =>
-                setLoginInfo({ ...loginInfo, pass: e.target.value })
+                setSignupInfo({ ...signupInfo, pass: e.target.value })
               }
               label="パスワード"
               placeholder="半角英数字6~20文字以内"
             />
           </div>
-          <div className="mt-8">
-            <Button onClick={() => onSubmit()} text="ログイン" />
-          </div>
           <div className="mt-4">
+            <Input
+              type="password"
+              value={signupInfo.confirmPass}
+              onChange={(e) =>
+                setSignupInfo({ ...signupInfo, confirmPass: e.target.value })
+              }
+              label="確認用パスワード"
+              placeholder="パスワードを入力してください"
+            />
+          </div>
+          <div className="mt-8">
             <Button
-              onClick={() => router.push('/signup')}
-              text="新規会員登録はこちら"
+              onClick={() =>
+                signupInfo.pass === signupInfo.confirmPass
+                  ? onSubmit()
+                  : alert('パスワードが異なっています。')
+              }
+              text="登録する"
             />
           </div>
         </div>
