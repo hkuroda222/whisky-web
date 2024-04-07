@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-
-import RecoilProvider from '@/app/RecoilProvider';
-
-import './globals.css';
+import RecoilProvider from '@/app/recoilProvider';
+import '@/app/globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
