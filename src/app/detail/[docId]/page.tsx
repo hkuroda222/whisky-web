@@ -12,7 +12,7 @@ const DetailPage = async ({ params }: { params: { docId: string } }) => {
       <div className="p-8 w-full lg:w-3/5 bg-white">
         <div className="flex">
           <Image
-            src={noteData.image_path}
+            src={noteData.image_path ? noteData.image_path : ''}
             alt="ボトル画像"
             width={288}
             height={288}
@@ -25,7 +25,11 @@ const DetailPage = async ({ params }: { params: { docId: string } }) => {
               {noteData.aging}年
             </h1>
             <div className="mt-2">
-              <Rating rating={noteData.rating} readOnly withLabel />
+              <Rating
+                rating={noteData.rating ? noteData.rating : 0}
+                readOnly
+                withLabel
+              />
             </div>
           </div>
         </div>
@@ -50,23 +54,19 @@ const DetailPage = async ({ params }: { params: { docId: string } }) => {
                 </tr>
                 <tr className="h-8">
                   <td className="w-1/4 font-bold">蒸溜</td>
-                  <td>
-                    {noteData.vintage > 0 ? `${noteData.vintage}年` : '-'}
-                  </td>
+                  <td>{noteData.vintage ? `${noteData.vintage}年` : '-'}</td>
                 </tr>
                 <tr className="h-8">
                   <td className="w-1/4 font-bold">瓶詰め</td>
-                  <td>
-                    {noteData.bottled > 0 ? `${noteData.bottled}年` : '-'}
-                  </td>
+                  <td>{noteData.bottled ? `${noteData.bottled}年` : '-'}</td>
                 </tr>
                 <tr className="h-8">
                   <td className="w-1/4 font-bold">熟成年数</td>
-                  <td>{noteData.aging > 0 ? `${noteData.aging}年` : '-'}</td>
+                  <td>{noteData.aging ? `${noteData.aging}年` : '-'}</td>
                 </tr>
                 <tr className="h-8">
                   <td className="w-1/4 font-bold">度数</td>
-                  <td>{noteData.alc > 0 ? noteData.alc : '-'}</td>
+                  <td>{noteData.alc ? noteData.alc : '-'}</td>
                 </tr>
                 <tr className="h-8">
                   <td className="w-1/4 font-bold">樽の種類</td>
@@ -91,7 +91,8 @@ const DetailPage = async ({ params }: { params: { docId: string } }) => {
         </div>
         <div className="flex justify-center mt-8 pt-8 w-full border-t">
           <DeleteButton />
-          <LinkButton href={`/edit/${docId}`} text="編集する" />
+          {/* todo: リンクの変更 */}
+          <LinkButton href={`/register`} text="編集する" />
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { useRef, ChangeEvent } from 'react';
 
 type ButtonProps = {
   onClick: () => void;
@@ -23,7 +24,6 @@ type LinkButtonProps = {
   href: string;
   text: string;
 };
-
 export const LinkButton: React.FC<LinkButtonProps> = (props) => {
   const { href, text } = props;
   return (
@@ -44,3 +44,30 @@ export const DeleteButton: React.FC = () => (
     削除する
   </button>
 );
+
+type ButtonWithFileInputProps = {
+  onChange: (e: ChangeEvent<HTMLInputElement>) => Promise<void>;
+  text: string;
+};
+export const ButtonWithFileInput: React.FC<ButtonWithFileInputProps> = (
+  props
+) => {
+  const { onChange, text } = props;
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  return (
+    <>
+      <button
+        onClick={() => fileInputRef.current?.click()}
+        className="w-full p-2 h-12 rounded-md border-solid border-2"
+      >
+        {text}
+      </button>
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={onChange}
+        className="hidden"
+      />
+    </>
+  );
+};
