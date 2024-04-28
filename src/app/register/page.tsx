@@ -6,6 +6,7 @@ import { Button, ButtonWithFileInput } from '@/components/elements/button';
 import { SelectDate } from '@/components/elements/datePicker';
 import { Modal } from '@/components/parts/modal';
 import { Rating } from '@/components/parts/rating';
+import { Loading } from '@/components/parts/loading';
 import { addNote, uploadImage } from '@/libs/firebase/api/note';
 import { useAuth } from '@/libs/hooks/useAuth';
 import { useModal } from '@/libs/hooks/useModal';
@@ -108,6 +109,7 @@ const Register = () => {
 
   return (
     <>
+      <Loading />
       <div className="flex justify-center min-h-[calc(100vh_-_88px)] pt-8 pb-20 px-3">
         <div className="p-8 w-full lg:w-3/5 bg-white">
           <h2 className="font-bold text-xl">ボトルの情報</h2>
