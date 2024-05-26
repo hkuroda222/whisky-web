@@ -3,14 +3,16 @@ import Link from 'next/link';
 import { useRef, ChangeEvent } from 'react';
 
 type ButtonProps = {
-  onClick: () => void;
+  type?: 'submit' | 'button';
+  onClick?: () => void;
   text: string;
   disabled?: boolean;
 };
 export const Button: React.FC<ButtonProps> = (props) => {
-  const { onClick, text, disabled } = props;
+  const { type = 'button', onClick, text, disabled } = props;
   return (
     <button
+      type={type}
       onClick={onClick}
       disabled={disabled}
       className="w-full p-2 h-12 rounded-md border-solid border-2"
@@ -38,6 +40,7 @@ export const LinkButton: React.FC<LinkButtonProps> = (props) => {
 
 export const DeleteButton: React.FC = () => (
   <button
+    type="button"
     onClick={() => alert('削除しますか？')}
     className="max-w-60 w-full p-2 h-12 rounded-md border-solid border-2 bg-black text-white"
   >
@@ -57,6 +60,7 @@ export const ButtonWithFileInput: React.FC<ButtonWithFileInputProps> = (
   return (
     <>
       <button
+        type="button"
         onClick={() => fileInputRef.current?.click()}
         className="w-full p-2 h-12 rounded-md border-solid border-2"
       >

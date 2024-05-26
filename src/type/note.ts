@@ -1,7 +1,7 @@
 export type NoteType = {
-  aging?: number;
-  alc?: number;
-  bottled?: number;
+  aging?: number | null;
+  alc?: number | null;
+  bottled?: number | null;
   bottler?: string;
   comment?: string;
   date?: Date;
@@ -11,10 +11,10 @@ export type NoteType = {
   image_path?: string;
   images?: Array<string>;
   nose?: string;
-  rating?: number;
+  rating?: number | null;
   region?: string;
   taste?: string;
   type?: string;
   uid: string;
-  vintage?: number;
+  vintage?: number | null;
 };

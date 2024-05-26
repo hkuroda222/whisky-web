@@ -1,23 +1,34 @@
 'use client';
-import DatePicker, { registerLocale } from 'react-datepicker';
+import { forwardRef, ForwardedRef, InputHTMLAttributes } from 'react';
+import DatePicker, {
+  ReactDatePickerProps,
+  registerLocale,
+} from 'react-datepicker';
 import { ja } from 'date-fns/locale/ja';
 
 registerLocale('ja', ja);
 
-type SelectDateProps = {
-  startDate: Date;
-  onChange: (e: Date) => void;
-};
-export const SelectDate: React.FC<SelectDateProps> = (props) => {
-  const { startDate, onChange } = props;
+const CustomInput = forwardRef(
+  (
+    props: InputHTMLAttributes<HTMLInputElement>,
+    ref: ForwardedRef<HTMLInputElement>
+  ) => {
+    return <input {...props} ref={ref} readOnly />;
+  }
+);
+
+export const DatePickerInput: React.FC<ReactDatePickerProps> = (props) => {
   return (
     <DatePicker
-      selected={startDate}
+      {...props}
       locale="ja"
-      onChange={onChange}
       dateFormat="yyyy年MM月dd日"
       calendarStartDay={1}
+      maxDate={new Date()}
+      showYearDropdown
+      scrollableYearDropdown
       className="py-2 px-3 w-full border-solid border-2 rounded"
+      customInput={<CustomInput />}
     />
   );
 };

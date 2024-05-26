@@ -1,9 +1,14 @@
 import { ChangeEvent } from 'react';
+import {
+  FieldValues,
+  useController,
+  UseControllerProps,
+} from 'react-hook-form';
 
 type InputProps = {
   type: 'text' | 'email' | 'password';
   value: string | number | undefined;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   label: string;
   placeholder: string;
   onClick?: () => void;
@@ -41,7 +46,7 @@ export const Input: React.FC<InputProps> = (props) => {
           value={value}
           type={type}
           id={label}
-          onChange={onChange}
+          onChange={onChange && onChange}
           onClick={onClick && onClick}
           disabled={disabled}
           readOnly={readOnly}
@@ -55,17 +60,37 @@ export const Input: React.FC<InputProps> = (props) => {
   );
 };
 
-type TextAreaProps = {
-  value: string | number | undefined;
-  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+type InputItemProps = {
+  type: 'input' | 'textarea';
   label: string;
   placeholder: string;
+  inputMode?: 'text' | 'numeric';
   isBold?: boolean;
   cols?: number;
+  unit?: string;
 };
 
-export const TextArea: React.FC<TextAreaProps> = (props) => {
-  const { value, onChange, label, placeholder, isBold, cols = 20 } = props;
+type InputItemComponentProps<T extends FieldValues> = UseControllerProps<T> &
+  InputItemProps;
+
+export const InputItem = <T extends FieldValues>(
+  props: InputItemComponentProps<T>
+) => {
+  const {
+    type,
+    label,
+    placeholder,
+    inputMode = 'text',
+    isBold = false,
+    cols = 20,
+    unit,
+    name,
+    control,
+    rules,
+  } = props;
+  const { field, fieldState } = useController<T>({ name, control, rules });
+  const { error } = fieldState;
+
   return (
     <div className="flex flex-col justify-center">
       <label
@@ -74,14 +99,32 @@ export const TextArea: React.FC<TextAreaProps> = (props) => {
       >
         {label}
       </label>
-      <textarea
-        id={label}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        cols={cols}
-        className="mt-1 py-2 px-3 h-44 resize-none border-solid border-2 rounded"
-      />
+      <div className="flex items-center w-full">
+        {type === 'input' ? (
+          <input
+            type="text"
+            id={label}
+            placeholder={placeholder}
+            inputMode={inputMode}
+            {...field}
+            className="mt-1 py-2 px-3 w-full bg-white border-solid border-2 rounded"
+          />
+        ) : (
+          <textarea
+            id={label}
+            placeholder={placeholder}
+            cols={cols}
+            {...field}
+            className="mt-1 py-2 px-3 h-44 w-full resize-none border-solid border-2 rounded"
+          />
+        )}
+        {unit && <span className="block ml-2">{unit}</span>}
+      </div>
+      {error && (
+        <div className="mt-2 h-4 w-full text-xs text-red-600">
+          {error.message}
+        </div>
+      )}
     </div>
   );
 };
