@@ -25,13 +25,16 @@ export const Button: React.FC<ButtonProps> = (props) => {
 type LinkButtonProps = {
   href: string;
   text: string;
+  isBold?: boolean;
 };
 export const LinkButton: React.FC<LinkButtonProps> = (props) => {
-  const { href, text } = props;
+  const { href, text, isBold } = props;
   return (
     <Link
       href={href}
-      className="flex justify-center items-center ml-4 max-w-60 w-full p-2 h-12 rounded-md border-solid border-2"
+      className={`flex justify-center items-center ml-4 max-w-60 w-full p-2 h-12 bg-white rounded-md border-solid border-2 ${
+        isBold ? 'font-bold' : 'font-nomal'
+      }`}
     >
       {text}
     </Link>
