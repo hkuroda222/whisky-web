@@ -4,8 +4,10 @@ export type NoteType = {
   bottled?: number | null;
   bottler?: string;
   comment?: string;
-  date?: Date;
+  // todo: 型付け
+  date: any;
   distillery_name?: string;
+  distilleryName?: string;
   docId?: string;
   finish?: string;
   image_path?: string;

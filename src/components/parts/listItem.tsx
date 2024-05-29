@@ -22,7 +22,7 @@ export const ListItem = (props: ListItemProps) => {
         <span className="block font-bold text-lg">{`${date.getFullYear()}年${date.getMonth()}月${date.getDate()}日`}</span>
         <div className="flex mt-2">
           <Image
-            src={data.image_path}
+            src={data.image_path ? data.image_path : ''}
             alt="ボトル画像"
             width={200}
             height={200}
@@ -43,7 +43,7 @@ export const ListItem = (props: ListItemProps) => {
                 瓶詰め: {data.bottled}年
               </span>
             )}
-            <Rating rating={data.rating} readOnly withLabel />
+            <Rating rating={data.rating ? data.rating : 0} readOnly withLabel />
           </div>
         </div>
       </Link>

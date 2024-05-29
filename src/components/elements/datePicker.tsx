@@ -16,6 +16,7 @@ const CustomInput = forwardRef(
     return <input {...props} ref={ref} readOnly />;
   }
 );
+CustomInput.displayName = 'CustomInput';
 
 export const DatePickerInput: React.FC<ReactDatePickerProps> = (props) => {
   return (

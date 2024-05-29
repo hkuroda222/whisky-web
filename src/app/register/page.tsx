@@ -7,10 +7,10 @@ import { Button, ButtonWithFileInput } from '@/components/elements/button';
 import { DatePickerInput } from '@/components/elements/datePicker';
 import { Rating } from '@/components/parts/rating';
 import { Loading } from '@/components/parts/loading';
+import { RegionModal } from '@/components/parts/regionModal';
 import { addNote, uploadImage } from '@/libs/firebase/api/note';
 import { useAuth } from '@/libs/hooks/useAuth';
 import { useModal } from '@/libs/hooks/useModal';
-import { DistilleryModal } from '@/components/parts/distilleryModal';
 
 type InitialInputType = {
   aging: string;
@@ -18,14 +18,15 @@ type InitialInputType = {
   bottled: string;
   bottler: string;
   brand: string;
+  caskNum: string;
   comment: string;
   date: Date;
-  distillery: number | null;
   distilleryName: string;
   finish: string;
   imageFiles: Array<File>;
   nose: string;
   rating: number;
+  region: string;
   taste: string;
   type: string;
   vintage: string;
@@ -33,15 +34,16 @@ type InitialInputType = {
 
 const Register = () => {
   const signInUser = useAuth();
-  const { isOpen, openModal, closeModal } = useModal();
   const [imagePreview, setImagePreview] = useState<string>('');
-  const [inputDistilleryName, setInputDistilleryName] = useState<string>('');
+  const { isOpen, openModal, closeModal } = useModal();
+
   const {
     handleSubmit,
     control,
     getValues,
     setValue,
-    formState: { isSubmitting, errors },
+    reset,
+    formState: { isSubmitting },
   } = useForm<InitialInputType>({
     defaultValues: {
       aging: '',
@@ -49,14 +51,15 @@ const Register = () => {
       bottled: '',
       bottler: '',
       brand: '',
+      caskNum: '',
       comment: '',
       date: new Date(),
-      distillery: null,
       distilleryName: '',
       finish: '',
       imageFiles: [],
       nose: '',
       rating: 0,
+      region: '',
       taste: '',
       type: '',
       vintage: '',
@@ -69,13 +72,15 @@ const Register = () => {
       alc: data.alc ? Number(data.alc) : null,
       bottled: data.bottled ? Number(data.bottled) : null,
       bottler: data.bottler,
+      caskNum: data.caskNum ? Number(data.caskNum) : null,
       comment: data.comment,
       createdAt: new Date(),
       date: data.date,
-      distillery: data.distillery,
+      distilleryName: data.distilleryName,
       finish: data.finish,
       nose: data.nose,
       rating: data.rating,
+      region: data.region,
       taste: data.taste,
       type: data.type,
       uid: signInUser.uid,
@@ -83,7 +88,7 @@ const Register = () => {
     };
     if (data.imageFiles.length > 0) {
       const imageUrl = await uploadImage(data.imageFiles[0]);
-      await addNote({ ...validateData, images: [imageUrl] });
+      await addNote({ ...validateData, images: new Array(imageUrl) });
     } else {
       await addNote({ ...validateData, images: [] });
     }
@@ -130,32 +135,33 @@ const Register = () => {
                 )}
               </div>
               <div className="mt-4">
-                <Input
-                  type="text"
-                  value={inputDistilleryName}
-                  onChange={(e) => {
-                    setInputDistilleryName(e.target.value);
-                  }}
-                  label="・蒸溜所名"
-                  placeholder="蒸溜所名を選択してください"
-                  onClick={openModal}
-                  readOnly
-                  isBold
-                />
-              </div>
-              <div className="mt-4">
                 <InputItem
                   type="input"
-                  name="brand"
+                  name="distilleryName"
                   control={control}
                   rules={{
+                    required: '蒸留所名 / ブランドは必須です',
                     maxLength: {
                       value: 30,
                       message: '文字数は30文字以内です。',
                     },
                   }}
-                  label="・ブランド"
-                  placeholder="ブランドを入力してください"
+                  label="・蒸留所名 / ブランド"
+                  placeholder="蒸留所名 / ブランドを入力してください"
+                  isBold
+                />
+              </div>
+              <div className="mt-4">
+                <Input
+                  type="text"
+                  value={getValues('region')}
+                  onChange={(e) => {
+                    setValue('region', e.target.value);
+                  }}
+                  label="・地域"
+                  placeholder="地域を選択してください"
+                  onClick={openModal}
+                  readOnly
                   isBold
                 />
               </div>
@@ -245,6 +251,24 @@ const Register = () => {
                   inputMode="numeric"
                   isBold
                   unit="%"
+                />
+              </div>
+              <div className="mt-4 max-w-48">
+                <InputItem
+                  type="input"
+                  name="caskNum"
+                  control={control}
+                  rules={{
+                    maxLength: {
+                      value: 10,
+                      message: '文字数は10文字以内です。',
+                    },
+                  }}
+                  label="・カスクナンバー"
+                  placeholder=""
+                  inputMode="numeric"
+                  isBold
+                  unit="　"
                 />
               </div>
               <div className="mt-4">
@@ -360,15 +384,14 @@ const Register = () => {
             </div>
           </form>
           {isOpen && (
-            <DistilleryModal
+            <RegionModal
               closeModal={closeModal}
-              onSubmit={(data: { distillery: string }) => {
-                setValue('distillery', Number(data.distillery));
+              onSubmit={(data: { region: string }) => {
+                setValue('region', data.region);
                 closeModal();
               }}
-              setDistilleryName={(distilleryName: string) => {
-                setInputDistilleryName(distilleryName);
-              }}
+              resetValue={() => reset({ region: '' })}
+              value={getValues('region')}
             />
           )}
         </div>

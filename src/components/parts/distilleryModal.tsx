@@ -1,3 +1,4 @@
+'use client';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/elements/button';
 import { Modal } from '@/components/parts/modal';
@@ -9,6 +10,11 @@ type DistilleryModalProps = {
   setDistilleryName: (distilleryName: string) => void;
 };
 
+// memo: 現状は、蒸留所名・ブランドを文字列で入力させるため、使用していない
+//       以下項目を検討する
+//        ・1つの蒸留所で複数のブランドがある場合の選択方式
+//        ・ブレンデットウイスキーの扱い
+//        ・シークレット名義のボトルの扱い
 export const DistilleryModal: React.FC<DistilleryModalProps> = (props) => {
   const { closeModal, onSubmit, setDistilleryName } = props;
 
