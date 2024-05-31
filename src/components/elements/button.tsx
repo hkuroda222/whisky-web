@@ -1,15 +1,18 @@
 'use client';
 import Link from 'next/link';
+import { useRef, ChangeEvent } from 'react';
 
 type ButtonProps = {
-  onClick: () => void;
+  type?: 'submit' | 'button';
+  onClick?: () => void;
   text: string;
   disabled?: boolean;
 };
 export const Button: React.FC<ButtonProps> = (props) => {
-  const { onClick, text, disabled } = props;
+  const { type = 'button', onClick, text, disabled } = props;
   return (
     <button
+      type={type}
       onClick={onClick}
       disabled={disabled}
       className="w-full p-2 h-12 rounded-md border-solid border-2"
@@ -22,14 +25,16 @@ export const Button: React.FC<ButtonProps> = (props) => {
 type LinkButtonProps = {
   href: string;
   text: string;
+  isBold?: boolean;
 };
-
 export const LinkButton: React.FC<LinkButtonProps> = (props) => {
-  const { href, text } = props;
+  const { href, text, isBold } = props;
   return (
     <Link
       href={href}
-      className="flex justify-center items-center ml-4 max-w-60 w-full p-2 h-12 rounded-md border-solid border-2"
+      className={`flex justify-center items-center ml-4 max-w-60 w-full p-2 h-12 bg-white rounded-md border-solid border-2 ${
+        isBold ? 'font-bold' : 'font-nomal'
+      }`}
     >
       {text}
     </Link>
@@ -38,9 +43,38 @@ export const LinkButton: React.FC<LinkButtonProps> = (props) => {
 
 export const DeleteButton: React.FC = () => (
   <button
+    type="button"
     onClick={() => alert('削除しますか？')}
     className="max-w-60 w-full p-2 h-12 rounded-md border-solid border-2 bg-black text-white"
   >
     削除する
   </button>
 );
+
+type ButtonWithFileInputProps = {
+  onChange: (e: ChangeEvent<HTMLInputElement>) => Promise<void>;
+  text: string;
+};
+export const ButtonWithFileInput: React.FC<ButtonWithFileInputProps> = (
+  props
+) => {
+  const { onChange, text } = props;
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => fileInputRef.current?.click()}
+        className="w-full p-2 h-12 rounded-md border-solid border-2"
+      >
+        {text}
+      </button>
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={onChange}
+        className="hidden"
+      />
+    </>
+  );
+};
