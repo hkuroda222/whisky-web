@@ -18,18 +18,16 @@ const ListPage = () => {
   }, [signInUser.uid]);
 
   return (
-    <div className="flex justify-center items-center mt-8 mb-20 px-3">
-      <div className="w-full lg:w-3/5">
-        <div className="flex justify-end">
-          <LinkButton href="/register" text="記録する" />
-        </div>
-        <ul className="mt-4 px-8 py-8 bg-white border-2 rounded">
-          {listData.map((data, i) => (
-            <ListItem data={data} index={i} key={`list-${i}`} />
-          ))}
-        </ul>
+    <>
+      <div className="flex justify-end">
+        <LinkButton href="/register" text="記録する" />
       </div>
-    </div>
+      <ul className="mt-4 p-3 md:p-8 bg-white border-2 rounded">
+        {listData.map((data, i) => (
+          <ListItem data={data} index={i} key={`list-${i}`} />
+        ))}
+      </ul>
+    </>
   );
 };
 
