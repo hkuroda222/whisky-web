@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Header } from '@/components/parts/header';
+import { Wrap } from '@/components/parts/wrap';
 import RecoilProvider from '@/app/recoilProvider';
 import '@/app/globals.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -22,7 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <RecoilProvider>
           <Header />
-          {children}
+          <Wrap>{children}</Wrap>
         </RecoilProvider>
       </body>
     </html>
