@@ -12,8 +12,10 @@ const ListPage = () => {
 
   useEffect(() => {
     (async () => {
-      const data = await getNoteList(signInUser.uid);
-      setListData(data);
+      if (signInUser.uid) {
+        const data = await getNoteList(signInUser.uid);
+        setListData(data);
+      }
     })();
   }, [signInUser.uid]);
 
