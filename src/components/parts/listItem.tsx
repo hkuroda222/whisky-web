@@ -22,7 +22,9 @@ export const ListItem = (props: ListItemProps) => {
         <span className="block font-bold text-lg">{`${date.getFullYear()}年${date.getMonth()}月${date.getDate()}日`}</span>
         <div className="flex mt-2">
           <Image
-            src={data.image_path ? data.image_path : ''}
+            src={
+              data.images.length > 0 ? data.images[0] : '/images/default.png'
+            }
             alt="ボトル画像"
             width={200}
             height={200}

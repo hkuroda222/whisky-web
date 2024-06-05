@@ -11,7 +11,11 @@ const DetailPage = async ({ params }: { params: { docId: string } }) => {
     <>
       <div className="flex">
         <Image
-          src={noteData.image_path ? noteData.image_path : ''}
+          src={
+            noteData.images.length > 0
+              ? noteData.images[0]
+              : '/images/default.png'
+          }
           alt="ボトル画像"
           width={288}
           height={288}

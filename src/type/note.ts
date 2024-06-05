@@ -10,8 +10,7 @@ export type NoteType = {
   distilleryName?: string;
   docId?: string;
   finish?: string;
-  image_path?: string;
-  images?: Array<string>;
+  images: Array<string>;
   nose?: string;
   rating?: number | null;
   region?: string;

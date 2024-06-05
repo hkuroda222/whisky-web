@@ -6,7 +6,6 @@ import {
   limit,
   orderBy,
   query,
-  where,
   addDoc,
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -15,8 +14,7 @@ import { NoteType } from '@/type/note';
 
 export const getNoteList = async (uid: string) => {
   const q = query(
-    collection(db, 'note'),
-    where('uid', '==', `${uid}`),
+    collection(db, 'users', uid, 'notes'),
     orderBy('date', 'desc'),
     limit(20)
   );
