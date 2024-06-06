@@ -1,11 +1,45 @@
+'use client';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import { LinkButton, DeleteButton } from '@/components/elements/button';
 import { Rating } from '@/components/parts/rating';
 import { getNote } from '@/libs/firebase/api/note';
+import { useAuth } from '@/libs/hooks/useAuth';
+import { NoteType } from '@/type/note';
 
-const DetailPage = async ({ params }: { params: { docId: string } }) => {
+const DetailPage = ({ params }: { params: { docId: string } }) => {
   const docId = params.docId;
-  const noteData = await getNote(docId);
+  const signInUser = useAuth();
+  const [noteData, setNoteData] = useState<NoteType>({
+    aging: null,
+    alc: null,
+    bottled: null,
+    bottler: '',
+    comment: '',
+    date: '',
+    distilleryName: '',
+    docId: '',
+    finish: '',
+    images: [],
+    nose: '',
+    rating: 0,
+    region: '',
+    taste: '',
+    type: '',
+    uid: '',
+    vintage: null,
+  });
+
+  useEffect(() => {
+    (async () => {
+      if (docId && signInUser.uid) {
+        const noteData = await getNote(signInUser.uid, docId);
+        if (noteData.rating && noteData.rating > 0) {
+          setNoteData(noteData);
+        }
+      }
+    })();
+  }, [docId, signInUser.uid]);
 
   return (
     <>
@@ -24,7 +58,7 @@ const DetailPage = async ({ params }: { params: { docId: string } }) => {
         />
         <div className="ml-4">
           <h1 className="font-bold text-lg">
-            {noteData.distillery_name}
+            {noteData.distilleryName}
             {noteData.aging}年
           </h1>
           <div className="mt-2">
@@ -43,7 +77,7 @@ const DetailPage = async ({ params }: { params: { docId: string } }) => {
             <tbody>
               <tr className="h-8">
                 <td className="w-1/4 font-bold">蒸溜所</td>
-                <td className="w-3/4">{noteData.distillery_name}</td>
+                <td className="w-3/4">{noteData.distilleryName}</td>
               </tr>
               <tr className="h-8">
                 <td className="w-1/4 font-bold">地域</td>
@@ -67,7 +101,7 @@ const DetailPage = async ({ params }: { params: { docId: string } }) => {
               </tr>
               <tr className="h-8">
                 <td className="w-1/4 font-bold">度数</td>
-                <td>{noteData.alc ? noteData.alc : '-'}</td>
+                <td>{noteData.alc ? `${noteData.alc}%` : '-'}</td>
               </tr>
               <tr className="h-8">
                 <td className="w-1/4 font-bold">樽の種類</td>
