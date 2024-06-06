@@ -61,7 +61,7 @@ export const Input: React.FC<InputProps> = (props) => {
 };
 
 type InputItemProps = {
-  type: 'input' | 'textarea';
+  type: 'text' | 'email' | 'password' | 'textarea';
   label: string;
   placeholder: string;
   inputMode?: 'text' | 'numeric';
@@ -100,22 +100,22 @@ export const InputItem = <T extends FieldValues>(
         {label}
       </label>
       <div className="flex items-center w-full">
-        {type === 'input' ? (
-          <input
-            type="text"
-            id={label}
-            placeholder={placeholder}
-            inputMode={inputMode}
-            {...field}
-            className="mt-1 py-2 px-3 w-full bg-white border-solid border-2 rounded"
-          />
-        ) : (
+        {type === 'textarea' ? (
           <textarea
             id={label}
             placeholder={placeholder}
             cols={cols}
             {...field}
             className="mt-1 py-2 px-3 h-44 w-full resize-none border-solid border-2 rounded"
+          />
+        ) : (
+          <input
+            type={type}
+            id={label}
+            placeholder={placeholder}
+            inputMode={inputMode}
+            {...field}
+            className="mt-1 py-2 px-3 w-full bg-white border-solid border-2 rounded"
           />
         )}
         {unit && <span className="block ml-2">{unit}</span>}

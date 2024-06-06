@@ -134,7 +134,7 @@ const Register = () => {
           </div>
           <div className="mt-4">
             <InputItem
-              type="input"
+              type="text"
               name="distilleryName"
               control={control}
               rules={{
@@ -165,7 +165,7 @@ const Register = () => {
           </div>
           <div className="mt-4">
             <InputItem
-              type="input"
+              type="text"
               name="bottler"
               control={control}
               rules={{
@@ -181,7 +181,7 @@ const Register = () => {
           </div>
           <div className="mt-4 max-w-48">
             <InputItem
-              type="input"
+              type="text"
               name="vintage"
               control={control}
               rules={{
@@ -199,7 +199,7 @@ const Register = () => {
           </div>
           <div className="mt-4 max-w-48">
             <InputItem
-              type="input"
+              type="text"
               name="bottled"
               control={control}
               rules={{
@@ -217,7 +217,7 @@ const Register = () => {
           </div>
           <div className="mt-4 max-w-48">
             <InputItem
-              type="input"
+              type="text"
               name="aging"
               control={control}
               rules={{
@@ -235,7 +235,7 @@ const Register = () => {
           </div>
           <div className="mt-4 max-w-48">
             <InputItem
-              type="input"
+              type="text"
               name="alc"
               control={control}
               rules={{
@@ -253,7 +253,7 @@ const Register = () => {
           </div>
           <div className="mt-4 max-w-48">
             <InputItem
-              type="input"
+              type="text"
               name="caskNum"
               control={control}
               rules={{
@@ -271,7 +271,7 @@ const Register = () => {
           </div>
           <div className="mt-4">
             <InputItem
-              type="input"
+              type="text"
               name="type"
               control={control}
               rules={{
