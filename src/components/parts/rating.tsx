@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 type RatingProps = {
   rating: number;
@@ -24,6 +24,11 @@ export const Rating = (props: RatingProps) => {
   const [clickValue, setClickValue] = useState(rating);
   const [isHovered, setIsHovered] = useState(false);
   const arr = [1, 2, 3, 4, 5];
+
+  useEffect(() => {
+    setHoverValue(rating);
+    setClickValue(rating);
+  }, [rating]);
 
   const calcRes = (
     amount: number,

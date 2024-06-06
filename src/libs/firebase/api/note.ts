@@ -25,8 +25,8 @@ export const getNoteList = async (uid: string) => {
   return data as NoteType[];
 };
 
-export const getNote = async (docId: string) => {
-  const snapShot = await getDoc(doc(db, 'note', docId));
+export const getNote = async (uid: string, docId: string) => {
+  const snapShot = await getDoc(doc(db, 'users', uid, 'notes', docId));
   const deta = snapShot.data();
   return deta as NoteType;
 };
