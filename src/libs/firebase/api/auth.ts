@@ -2,6 +2,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '@/libs/firebase/config';
 import { auth } from '@/libs/firebase/config';
 
 export const signInWithEmail = async (args: { mail: string; pass: string }) => {
@@ -20,7 +22,14 @@ export const signUpWithEmail = async (args: { mail: string; pass: string }) => {
       auth,
       args.mail,
       args.pass
-    );
+    ).then(async (userCredential) => {
+      const ref = doc(db, 'users', userCredential.user.uid);
+      await setDoc(ref, {
+        uid: userCredential.user.uid,
+        email: userCredential.user.email,
+      });
+      return userCredential.user.uid;
+    });
     return user;
   } catch (error) {
     alert('ユーザー登録に失敗しました。');
