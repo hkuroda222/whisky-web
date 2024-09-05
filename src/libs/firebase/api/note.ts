@@ -7,8 +7,14 @@ import {
   orderBy,
   query,
   addDoc,
+  updateDoc,
 } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from 'firebase/storage';
 import { db, storage } from '@/libs/firebase/config';
 import { NoteType } from '@/type/note';
 
@@ -31,6 +37,16 @@ export const getNote = async (uid: string, docId: string) => {
   return deta as NoteType;
 };
 
+export const addNote = async (noteData: NoteType) => {
+  const ref = collection(db, 'users', noteData.uid, 'notes');
+  await addDoc(ref, noteData);
+};
+
+export const updateNote = async (noteData: NoteType, docId: string) => {
+  const docRef = doc(db, 'users', noteData.uid, 'notes', docId);
+  await updateDoc(docRef, noteData);
+};
+
 export const uploadImage = async (file: File) => {
   const timestamp = new Date().getTime();
   const uniqueFilename = `${timestamp}_${file.name}`;
@@ -41,7 +57,7 @@ export const uploadImage = async (file: File) => {
   return imageUrl;
 };
 
-export const addNote = async (noteData: NoteType) => {
-  const ref = collection(db, 'users', noteData.uid, 'notes');
-  await addDoc(ref, noteData);
+export const deleteImage = async (imageUrl: string) => {
+  const deleteRef = ref(storage, imageUrl);
+  await deleteObject(deleteRef);
 };

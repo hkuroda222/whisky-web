@@ -34,9 +34,7 @@ const DetailPage = ({ params }: { params: { docId: string } }) => {
     (async () => {
       if (docId && signInUser.uid) {
         const noteData = await getNote(signInUser.uid, docId);
-        if (noteData.rating && noteData.rating > 0) {
-          setNoteData(noteData);
-        }
+        setNoteData(noteData);
       }
     })();
   }, [docId, signInUser.uid]);
@@ -126,8 +124,7 @@ const DetailPage = ({ params }: { params: { docId: string } }) => {
       </div>
       <div className="flex justify-center mt-8 pt-8 w-full border-t">
         <DeleteButton />
-        {/* todo: リンクの変更 */}
-        <LinkButton href={`/register`} text="編集する" />
+        <LinkButton href={`/edit/${docId}/`} text="編集する" />
       </div>
     </>
   );
