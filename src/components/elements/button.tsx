@@ -15,7 +15,9 @@ export const Button: React.FC<ButtonProps> = (props) => {
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className="w-full p-2 h-12 rounded-md border-solid border-2"
+      className={`w-full p-2 h-12 rounded-md border-solid border-2 ${
+        disabled ? 'opacity-50' : ''
+      }`}
     >
       {text}
     </button>

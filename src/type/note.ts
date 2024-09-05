@@ -3,6 +3,7 @@ export type NoteType = {
   alc?: number | null;
   bottled?: number | null;
   bottler?: string;
+  caskNum?: number | null;
   comment?: string;
   // todo: 型付け
   date: any;
@@ -12,7 +13,7 @@ export type NoteType = {
   finish?: string;
   images: Array<string>;
   nose?: string;
-  rating?: number | null;
+  rating?: number;
   region?: string;
   taste?: string;
   type?: string;
