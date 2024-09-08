@@ -9,7 +9,7 @@ type ListItemProps = {
 };
 export const ListItem = (props: ListItemProps) => {
   const { data, index } = props;
-  const date = new Date(data.date.seconds * 1000);
+  const date = new Date(data.date.toDate());
   return (
     <li
       className="block [&:nth-child(n+2)]:mt-4"
@@ -19,7 +19,9 @@ export const ListItem = (props: ListItemProps) => {
       }}
     >
       <Link href={`/detail/${data.docId}`} className="block">
-        <span className="block font-bold text-lg">{`${date.getFullYear()}年${date.getMonth()}月${date.getDate()}日`}</span>
+        <span className="block font-bold text-lg">{`${date.getFullYear()}年${
+          date.getMonth() + 1
+        }月${date.getDate()}日`}</span>
         <div className="flex mt-2">
           <Image
             src={
@@ -33,7 +35,7 @@ export const ListItem = (props: ListItemProps) => {
           />
           <div className="ml-4">
             <span className="block font-bold text-lg">
-              {data.distillery_name}
+              {data.distilleryName}
               {data.aging}年
             </span>
             <span className="block font-medium">{data.bottler}</span>

@@ -1,20 +1,67 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { QueryDocumentSnapshot } from 'firebase/firestore';
 import { LinkButton } from '@/components/elements/button';
 import { ListItem } from '@/components/parts/listItem';
+import { Loading } from '@/components/parts/loading';
 import { useAuth } from '@/libs/hooks/useAuth';
-import { getNoteList } from '@/libs/firebase/api/note';
+import { getNoteList, getNextList } from '@/libs/firebase/api/note';
 import { NoteType } from '@/type/note';
+
+const LIST_LIMIT = 10;
 
 const ListPage = () => {
   const [listData, setListData] = useState<NoteType[]>([]);
+  const [lastVisible, setLastVisible] = useState<QueryDocumentSnapshot | null>(
+    null
+  );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState<boolean>(true);
   const signInUser = useAuth();
+
+  const getListData = async () => {
+    setIsLoading(true);
+    const { data, lastVisible } = await getNoteList(signInUser.uid, LIST_LIMIT);
+    setListData(data);
+    setLastVisible(lastVisible);
+    setIsLoading(false);
+    setHasMore(data.length === LIST_LIMIT);
+    setIsLoading(false);
+  };
+
+  const getNextListData = async () => {
+    if (!lastVisible || !hasMore) return;
+    const { data, nextLastVisible } = await getNextList(
+      signInUser.uid,
+      lastVisible,
+      LIST_LIMIT
+    );
+    setListData((prevData) => [...prevData, ...data]);
+    setLastVisible(nextLastVisible);
+    setIsLoading(false);
+    setHasMore(data.length === LIST_LIMIT);
+  };
+
+  const handleScroll = useCallback(() => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop !==
+        document.documentElement.offsetHeight ||
+      isLoading
+    ) {
+      return;
+    }
+    getNextListData();
+  }, [isLoading, lastVisible, hasMore]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
 
   useEffect(() => {
     (async () => {
       if (signInUser.uid) {
-        const data = await getNoteList(signInUser.uid);
-        setListData(data);
+        await getListData();
       }
     })();
   }, [signInUser.uid]);
@@ -29,6 +76,7 @@ const ListPage = () => {
           <ListItem data={data} index={i} key={`list-${i}`} />
         ))}
       </ul>
+      {isLoading && <Loading />}
     </>
   );
 };
