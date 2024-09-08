@@ -43,6 +43,22 @@ export const LinkButton: React.FC<LinkButtonProps> = (props) => {
   );
 };
 
+type FloatingButtonProps = {
+  href: string;
+  children: React.ReactNode;
+};
+export const FloatingButton: React.FC<FloatingButtonProps> = (props) => {
+  const { href, children } = props;
+  return (
+    <Link
+      href={href}
+      className="fixed bottom-12 right-12 flex items-center justify-center w-12 h-12 sm:w-20 sm:h-20 border-solid border-2 sm:border-4 border-gray-600 rounded-full shadow-lg bg-gray-300"
+    >
+      {children}
+    </Link>
+  );
+};
+
 export const DeleteButton: React.FC = () => (
   <button
     type="button"
