@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { Button } from '@/components/elements/button';
+import { HamburgerMenu } from '@/components/parts/menu';
 import { signOut } from '@/libs/firebase/api/auth';
 
 export const Header: React.FC = () => {
@@ -18,17 +19,7 @@ export const Header: React.FC = () => {
         >
           Taster
         </Link>
-        {parhName !== '/' && (
-          <nav className="flex justify-center items-center text-base">
-            <Button
-              onClick={async () => {
-                await signOut();
-                router.push('/');
-              }}
-              text="サインアウト"
-            />
-          </nav>
-        )}
+        {parhName !== '/' && <HamburgerMenu />}
       </div>
     </header>
   );
