@@ -34,11 +34,27 @@ export const LinkButton: React.FC<LinkButtonProps> = (props) => {
   return (
     <Link
       href={href}
-      className={`flex justify-center items-center ml-4 max-w-60 w-full p-2 h-12 bg-white rounded-md border-solid border-2 ${
+      className={`flex justify-center items-center max-w-60 w-full p-2 h-12 bg-white rounded-md border-solid border-2 ${
         isBold ? 'font-bold' : 'font-nomal'
       }`}
     >
       {text}
+    </Link>
+  );
+};
+
+type FloatingButtonProps = {
+  href: string;
+  children: React.ReactNode;
+};
+export const FloatingButton: React.FC<FloatingButtonProps> = (props) => {
+  const { href, children } = props;
+  return (
+    <Link
+      href={href}
+      className="fixed bottom-12 right-12 flex items-center justify-center w-12 h-12 sm:w-20 sm:h-20 border-solid border-2 sm:border-4 border-gray-600 rounded-full shadow-lg bg-gray-300"
+    >
+      {children}
     </Link>
   );
 };

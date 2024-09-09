@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import { QueryDocumentSnapshot } from 'firebase/firestore';
-import { LinkButton } from '@/components/elements/button';
+import { FloatingButton } from '@/components/elements/button';
 import { ListItem } from '@/components/parts/listItem';
 import { Loading } from '@/components/parts/loading';
 import { useAuth } from '@/libs/hooks/useAuth';
@@ -68,15 +68,15 @@ const ListPage = () => {
 
   return (
     <>
-      <div className="flex justify-end">
-        <LinkButton href="/register" text="記録する" />
-      </div>
+      {isLoading && <Loading />}
       <ul className="mt-4 p-3 md:p-8 bg-white border-2 rounded">
         {listData.map((data, i) => (
           <ListItem data={data} index={i} key={`list-${i}`} />
         ))}
       </ul>
-      {isLoading && <Loading />}
+      <FloatingButton href="/register">
+        <span className="text-2xl sm:text-3xl text-slate-600">+</span>
+      </FloatingButton>
     </>
   );
 };

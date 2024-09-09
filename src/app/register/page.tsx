@@ -3,11 +3,16 @@ import Image from 'next/image';
 import { useState, ChangeEvent } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { Input, InputItem } from '@/components/elements/input';
-import { Button, ButtonWithFileInput } from '@/components/elements/button';
+import {
+  Button,
+  LinkButton,
+  ButtonWithFileInput,
+} from '@/components/elements/button';
 import { DatePickerInput } from '@/components/elements/datePicker';
 import { Rating } from '@/components/parts/rating';
 import { Loading } from '@/components/parts/loading';
 import { RegionModal } from '@/components/parts/regionModal';
+import { Modal } from '@/components/parts/modal';
 import { addNote, uploadImage } from '@/libs/firebase/api/note';
 import { useAuth } from '@/libs/hooks/useAuth';
 import { useModal } from '@/libs/hooks/useModal';
@@ -35,6 +40,7 @@ type InitialInputType = {
 const Register = () => {
   const signInUser = useAuth();
   const [imagePreview, setImagePreview] = useState<string>('');
+  const [doneSubmit, setDoneSubmit] = useState<boolean>(false);
   const { isOpen, openModal, closeModal } = useModal();
 
   const {
@@ -89,8 +95,10 @@ const Register = () => {
     if (data.imageFiles.length > 0) {
       const imageUrl = await uploadImage(data.imageFiles[0]);
       await addNote({ ...validateData, images: new Array(imageUrl) });
+      setDoneSubmit(true);
     } else {
       await addNote({ ...validateData, images: [] });
+      setDoneSubmit(true);
     }
   };
 
@@ -391,6 +399,16 @@ const Register = () => {
           resetValue={() => reset({ region: '' })}
           value={getValues('region')}
         />
+      )}
+      {doneSubmit && (
+        <Modal>
+          <div className="flex flex-col justify-center items-center">
+            <div className="text-lg font-bold">登録が完了しました</div>
+            <div className="mt-2 w-60">
+              <LinkButton href="/list/" text="一覧画面に戻る" />
+            </div>
+          </div>
+        </Modal>
       )}
     </>
   );
