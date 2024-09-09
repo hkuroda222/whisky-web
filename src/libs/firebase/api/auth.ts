@@ -44,3 +44,14 @@ export const signOut = async () => {
     alert('サインアウトに失敗しました。');
   }
 };
+
+export const deleteAccount = async () => {
+  try {
+    const user = auth.currentUser;
+    if (user) {
+      await user.delete();
+    }
+  } catch (error) {
+    alert('アカウントの削除に失敗しました。');
+  }
+};
