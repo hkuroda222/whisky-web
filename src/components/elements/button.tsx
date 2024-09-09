@@ -34,7 +34,7 @@ export const LinkButton: React.FC<LinkButtonProps> = (props) => {
   return (
     <Link
       href={href}
-      className={`flex justify-center items-center ml-4 max-w-60 w-full p-2 h-12 bg-white rounded-md border-solid border-2 ${
+      className={`flex justify-center items-center max-w-60 w-full p-2 h-12 bg-white rounded-md border-solid border-2 ${
         isBold ? 'font-bold' : 'font-nomal'
       }`}
     >

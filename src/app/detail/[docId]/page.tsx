@@ -123,8 +123,12 @@ const DetailPage = ({ params }: { params: { docId: string } }) => {
         </div>
       </div>
       <div className="flex justify-center mt-8 pt-8 w-full border-t">
-        <DeleteButton />
-        <LinkButton href={`/edit/${docId}/`} text="編集する" />
+        <div className="w-60">
+          <DeleteButton />
+        </div>
+        <div className="ml-4 w-60">
+          <LinkButton href={`/edit/${docId}/`} text="編集する" />
+        </div>
       </div>
     </>
   );

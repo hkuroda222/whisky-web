@@ -3,11 +3,16 @@ import Image from 'next/image';
 import { useState, useEffect, ChangeEvent } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { Input, InputItem } from '@/components/elements/input';
-import { Button, ButtonWithFileInput } from '@/components/elements/button';
+import {
+  Button,
+  LinkButton,
+  ButtonWithFileInput,
+} from '@/components/elements/button';
 import { DatePickerInput } from '@/components/elements/datePicker';
 import { Rating } from '@/components/parts/rating';
 import { Loading } from '@/components/parts/loading';
 import { RegionModal } from '@/components/parts/regionModal';
+import { Modal } from '@/components/parts/modal';
 import {
   getNote,
   uploadImage,
@@ -62,6 +67,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
     // todo: 型付け
     useState<any>(initialDataTemplate);
   const [imagePreview, setImagePreview] = useState<string>('');
+  const [doneSubmit, setDoneSubmit] = useState<boolean>(false);
   const { isOpen, openModal, closeModal } = useModal();
 
   const {
@@ -137,8 +143,10 @@ export default function EditPage({ params }: { params: { docId: string } }) {
       const imageUrl = await uploadImage(data.imageFiles[0]);
       await updateNote({ ...validateData, images: new Array(imageUrl) }, docId);
       await deleteImage(initialData.imageFiles[0]);
+      setDoneSubmit(true);
     } else {
       await updateNote({ ...validateData, images: [] }, docId);
+      setDoneSubmit(true);
     }
   };
 
@@ -445,6 +453,16 @@ export default function EditPage({ params }: { params: { docId: string } }) {
           resetValue={() => reset({ region: '' })}
           value={getValues('region')}
         />
+      )}
+      {doneSubmit && (
+        <Modal>
+          <div className="flex flex-col justify-center items-center">
+            <div className="text-lg font-bold">編集が完了しました</div>
+            <div className="mt-2 w-60">
+              <LinkButton href="/list/" text="一覧画面に戻る" />
+            </div>
+          </div>
+        </Modal>
       )}
     </>
   );
