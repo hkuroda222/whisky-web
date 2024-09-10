@@ -13,6 +13,7 @@ import { Rating } from '@/components/parts/rating';
 import { Loading } from '@/components/parts/loading';
 import { RegionModal } from '@/components/parts/regionModal';
 import { Modal } from '@/components/parts/modal';
+import { NoteType } from '@/type/note';
 import {
   getNote,
   uploadImage,
@@ -32,7 +33,7 @@ type InitialInputType = {
   date: Date;
   distilleryName: string;
   finish: string;
-  imageFiles: Array<File>;
+  imageFiles: Array<string>;
   nose: string;
   rating: number;
   region: string;
@@ -64,9 +65,9 @@ export default function EditPage({ params }: { params: { docId: string } }) {
   const docId = params.docId;
   const signInUser = useAuth();
   const [initialData, setInitialData] =
-    // todo: 型付け
-    useState<any>(initialDataTemplate);
+    useState<InitialInputType>(initialDataTemplate);
   const [imagePreview, setImagePreview] = useState<string>('');
+  const [changedImage, setChangedImage] = useState<Array<File>>([]);
   const [doneSubmit, setDoneSubmit] = useState<boolean>(false);
   const { isOpen, openModal, closeModal } = useModal();
 
@@ -86,13 +87,12 @@ export default function EditPage({ params }: { params: { docId: string } }) {
       if (docId && signInUser.uid) {
         const noteData = await getNote(signInUser.uid, docId);
         setInitialData({
-          aging: String(noteData.aging),
-          alc: String(noteData.alc),
-          bottled: String(noteData.bottled),
+          aging: noteData.aging ? String(noteData.aging) : '',
+          alc: noteData.alc ? String(noteData.alc) : '',
+          bottled: noteData.bottled ? String(noteData.bottled) : '',
           bottler: noteData.bottler ? noteData.bottler : '',
-          caskNum: String(noteData.caskNum),
+          caskNum: noteData.caskNum ? String(noteData.caskNum) : '',
           comment: noteData.comment ? noteData.comment : '',
-          createdAt: noteData.date,
           date: new Date(noteData.date.toDate()),
           distilleryName: noteData.distilleryName
             ? noteData.distilleryName
@@ -104,7 +104,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
           region: noteData.region ? noteData.region : '',
           taste: noteData.taste ? noteData.taste : '',
           type: noteData.type ? noteData.type : '',
-          vintage: String(noteData.vintage),
+          vintage: noteData.vintage ? String(noteData.vintage) : '',
         });
         setImagePreview(noteData.images[0]);
       }
@@ -116,8 +116,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
   }, [reset, initialData]);
 
   const onSubmit: SubmitHandler<InitialInputType> = async (data) => {
-    // todo: 型付け
-    const validateData: any = {
+    const validateData: NoteType = {
       aging: data.aging ? Number(data.aging) : null,
       alc: data.alc ? Number(data.alc) : null,
       bottled: data.bottled ? Number(data.bottled) : null,
@@ -127,25 +126,28 @@ export default function EditPage({ params }: { params: { docId: string } }) {
       date: data.date,
       distilleryName: data.distilleryName,
       finish: data.finish,
+      images: [],
       nose: data.nose,
       rating: data.rating,
       region: data.region,
       taste: data.taste,
       type: data.type,
       uid: signInUser.uid,
-      updateedAt: new Date(),
+      updatedAt: new Date(),
       vintage: data.vintage ? Number(data.vintage) : null,
     };
 
-    const isImageChanged = data.imageFiles[0] !== initialData.imageFiles[0];
+    const isChangedImage = changedImage.length > 0;
 
-    if (data.imageFiles.length > 0 && isImageChanged) {
-      const imageUrl = await uploadImage(data.imageFiles[0]);
+    if (isChangedImage) {
+      const imageUrl = await uploadImage(changedImage[0]);
       await updateNote({ ...validateData, images: new Array(imageUrl) }, docId);
-      await deleteImage(initialData.imageFiles[0]);
+      if (initialData.imageFiles.length > 0) {
+        await deleteImage(initialData.imageFiles[0]);
+      }
       setDoneSubmit(true);
     } else {
-      await updateNote({ ...validateData, images: [] }, docId);
+      await updateNote({ ...validateData }, docId);
       setDoneSubmit(true);
     }
   };
@@ -155,7 +157,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
     if (selectedFile) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setValue('imageFiles', [selectedFile]);
+        setChangedImage([selectedFile]);
         setImagePreview(reader.result as string);
       };
       reader.readAsDataURL(selectedFile);
@@ -168,7 +170,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <h2 className="font-bold text-xl">ボトルの情報</h2>
         <div className="mt-8">
-          <span className="block font-bold">・写真を追加する</span>
+          <span className="block font-bold">・写真を変更する</span>
           <div>
             <div className="mt-4 max-w-48">
               <ButtonWithFileInput
