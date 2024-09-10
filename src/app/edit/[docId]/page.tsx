@@ -13,6 +13,7 @@ import { Rating } from '@/components/parts/rating';
 import { Loading } from '@/components/parts/loading';
 import { RegionModal } from '@/components/parts/regionModal';
 import { Modal } from '@/components/parts/modal';
+import { NoteType } from '@/type/note';
 import {
   getNote,
   uploadImage,
@@ -115,8 +116,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
   }, [reset, initialData]);
 
   const onSubmit: SubmitHandler<InitialInputType> = async (data) => {
-    // todo: 型付け
-    const validateData: any = {
+    const validateData: NoteType = {
       aging: data.aging ? Number(data.aging) : null,
       alc: data.alc ? Number(data.alc) : null,
       bottled: data.bottled ? Number(data.bottled) : null,
@@ -126,6 +126,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
       date: data.date,
       distilleryName: data.distilleryName,
       finish: data.finish,
+      images: [],
       nose: data.nose,
       rating: data.rating,
       region: data.region,

@@ -18,5 +18,7 @@ export type NoteType = {
   taste?: string;
   type?: string;
   uid: string;
+  // todo: 型付け
+  updatedAt?: any;
   vintage?: number | null;
 };
