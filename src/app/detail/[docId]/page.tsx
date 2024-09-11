@@ -79,7 +79,7 @@ const DetailPage = ({ params }: { params: { docId: string } }) => {
               </tr>
               <tr className="h-8">
                 <td className="w-1/4 font-bold">地域</td>
-                <td>{noteData.region}</td>
+                <td>{noteData.region ? noteData.region : '-'}</td>
               </tr>
               <tr className="h-8">
                 <td className="w-1/4 font-bold">ボトラー</td>
@@ -111,14 +111,14 @@ const DetailPage = ({ params }: { params: { docId: string } }) => {
         <div className="mt-4 sm:mt-0 w-full sm:w-2/4">
           <h2 className="block font-bold text-lg">テイスティングノート</h2>
           <dl className="mt-4">
-            <dt className="font-bold">香り</dt>
-            <dd className="w-full">{noteData.nose}</dd>
-            <dt className="mt-3 font-bold">味</dt>
-            <dd>{noteData.taste}</dd>
-            <dt className="mt-3 font-bold">余韻</dt>
-            <dd>{noteData.finish}</dd>
-            <dt className="mt-3 font-bold">総評</dt>
-            <dd>{noteData.comment}</dd>
+            <dt className="leading-8 font-bold">香り</dt>
+            <dd className="w-full">{noteData.nose ? noteData.nose : '-'}</dd>
+            <dt className="leading-8 mt-3 font-bold">味</dt>
+            <dd>{noteData.taste ? noteData.taste : '-'}</dd>
+            <dt className="leading-8 mt-3 font-bold">余韻</dt>
+            <dd>{noteData.finish ? noteData.finish : '-'}</dd>
+            <dt className="leading-8 mt-3 font-bold">総評</dt>
+            <dd>{noteData.comment ? noteData.comment : '-'}</dd>
           </dl>
         </div>
       </div>
