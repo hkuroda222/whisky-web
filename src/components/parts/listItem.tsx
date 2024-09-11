@@ -36,7 +36,7 @@ export const ListItem = (props: ListItemProps) => {
           <div className="ml-4">
             <span className="block font-bold text-lg">
               {data.distilleryName}
-              {data.aging}年
+              {data.aging && data.aging > 0 && `${data.aging + '年'}`}
             </span>
             <span className="block font-medium">{data.bottler}</span>
             {data.vintage && data.vintage > 0 && (
