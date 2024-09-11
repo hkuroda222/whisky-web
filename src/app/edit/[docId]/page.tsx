@@ -439,6 +439,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
         <div className="mt-4">
           <Button
             type="submit"
+            color="white"
             text="登録する"
             // todo: 画像登録inputをreact hook formに置き換えた後に適用する
             // disabled={!isDirty && !isValid}

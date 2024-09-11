@@ -4,12 +4,19 @@ import { useRef, ChangeEvent } from 'react';
 
 type ButtonProps = {
   type?: 'submit' | 'button';
+  color: 'white' | 'black';
   onClick?: () => void;
   text: string;
   disabled?: boolean;
 };
 export const Button: React.FC<ButtonProps> = (props) => {
-  const { type = 'button', onClick, text, disabled } = props;
+  const { type = 'button', color, onClick, text, disabled } = props;
+
+  const colorClasses = {
+    white: 'bg-white text-black',
+    black: 'bg-black text-white',
+  };
+
   return (
     <button
       type={type}
@@ -17,7 +24,8 @@ export const Button: React.FC<ButtonProps> = (props) => {
       disabled={disabled}
       className={`w-full p-2 h-12 rounded-md border-solid border-2 ${
         disabled ? 'opacity-50' : ''
-      }`}
+      }
+      ${colorClasses[color]}`}
     >
       {text}
     </button>
@@ -58,16 +66,6 @@ export const FloatingButton: React.FC<FloatingButtonProps> = (props) => {
     </Link>
   );
 };
-
-export const DeleteButton: React.FC = () => (
-  <button
-    type="button"
-    onClick={() => alert('削除しますか？')}
-    className="max-w-60 w-full p-2 h-12 rounded-md border-solid border-2 bg-black text-white"
-  >
-    削除する
-  </button>
-);
 
 type ButtonWithFileInputProps = {
   onChange: (e: ChangeEvent<HTMLInputElement>) => Promise<void>;

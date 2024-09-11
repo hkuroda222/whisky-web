@@ -80,10 +80,12 @@ const SignIn = () => {
             />
           </div>
           <div className="mt-8 w-full">
-            <Button type="submit" text="ログイン" />
+            <Button type="submit" color="white" text="ログイン" />
           </div>
           <div className="mt-4 w-full">
             <Button
+              type="button"
+              color="white"
               onClick={() => router.push('/signup')}
               text="新規会員登録はこちら"
             />

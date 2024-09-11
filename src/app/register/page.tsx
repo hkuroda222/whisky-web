@@ -386,7 +386,7 @@ const Register = () => {
           </div>
         </div>
         <div className="mt-4">
-          <Button type="submit" text="登録する" />
+          <Button type="submit" color="white" text="登録する" />
         </div>
       </form>
       {isOpen && (

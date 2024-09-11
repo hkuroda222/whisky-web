@@ -2,6 +2,7 @@ import {
   collection,
   getDoc,
   getDocs,
+  deleteDoc,
   doc,
   limit,
   orderBy,
@@ -64,6 +65,11 @@ export const getNote = async (uid: string, docId: string) => {
 export const addNote = async (noteData: NoteType) => {
   const ref = collection(db, 'users', noteData.uid, 'notes');
   await addDoc(ref, noteData);
+};
+
+export const deleteNote = async (uid: string, docId: string) => {
+  const docRef = doc(db, 'users', uid, 'notes', docId);
+  await deleteDoc(docRef);
 };
 
 export const updateNote = async (noteData: NoteType, docId: string) => {

@@ -79,6 +79,7 @@ export const HamburgerMenu: React.FC = () => {
             <div className="mt-2 w-60">
               <Button
                 type="button"
+                color="white"
                 onClick={async () => {
                   toggleMenu();
                   deleteAccount();
