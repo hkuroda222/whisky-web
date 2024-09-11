@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import { QueryDocumentSnapshot } from 'firebase/firestore';
-import { FloatingButton } from '@/components/elements/button';
+import { LinkButton, FloatingButton } from '@/components/elements/button';
 import { ListItem } from '@/components/parts/listItem';
 import { Loading } from '@/components/parts/loading';
 import { useAuth } from '@/libs/hooks/useAuth';
@@ -15,12 +15,11 @@ const ListPage = () => {
   const [lastVisible, setLastVisible] = useState<QueryDocumentSnapshot | null>(
     null
   );
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const signInUser = useAuth();
 
   const getListData = async () => {
-    setIsLoading(true);
     const { data, lastVisible } = await getNoteList(signInUser.uid, LIST_LIMIT);
     setListData(data);
     setLastVisible(lastVisible);
@@ -66,18 +65,30 @@ const ListPage = () => {
     })();
   }, [signInUser.uid]);
 
-  return (
+  return !isLoading ? (
     <>
-      {isLoading && <Loading />}
-      <ul className="mt-4 p-3 md:p-8 bg-white border-2 rounded">
-        {listData.map((data, i) => (
-          <ListItem data={data} index={i} key={`list-${i}`} />
-        ))}
-      </ul>
-      <FloatingButton href="/register">
-        <span className="text-2xl sm:text-3xl text-slate-600">+</span>
-      </FloatingButton>
+      {listData.length > 0 ? (
+        <>
+          <ul className="mt-4 p-3 md:p-8 bg-white border-2 rounded">
+            {listData.map((data, i) => (
+              <ListItem data={data} index={i} key={`list-${i}`} />
+            ))}
+          </ul>
+          <FloatingButton href="/register">
+            <span className="text-2xl sm:text-3xl text-slate-600">+</span>
+          </FloatingButton>
+        </>
+      ) : (
+        <div className="flex flex-col justify-center items-center">
+          <div>登録されているデータがありません</div>
+          <div className="mt-2 w-60">
+            <LinkButton href="/register/" text="登録する" />
+          </div>
+        </div>
+      )}
     </>
+  ) : (
+    <Loading />
   );
 };
 
