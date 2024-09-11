@@ -1,15 +1,18 @@
 'use client';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { LinkButton, DeleteButton } from '@/components/elements/button';
+import { Button, LinkButton } from '@/components/elements/button';
 import { Rating } from '@/components/parts/rating';
-import { getNote } from '@/libs/firebase/api/note';
+import { Modal } from '@/components/parts/modal';
+import { getNote, deleteNote, deleteImage } from '@/libs/firebase/api/note';
 import { useAuth } from '@/libs/hooks/useAuth';
 import { NoteType } from '@/type/note';
 
 const DetailPage = ({ params }: { params: { docId: string } }) => {
   const docId = params.docId;
   const signInUser = useAuth();
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const [doneDelete, setDoneDelete] = useState<boolean>(false);
   const [noteData, setNoteData] = useState<NoteType>({
     aging: null,
     alc: null,
@@ -124,12 +127,59 @@ const DetailPage = ({ params }: { params: { docId: string } }) => {
       </div>
       <div className="flex justify-center mt-8 pt-8 w-full border-t">
         <div className="w-60">
-          <DeleteButton />
+          <Button
+            type="button"
+            color="black"
+            onClick={() => {
+              setShowDeleteModal(true);
+            }}
+            text="削除する"
+          />
         </div>
         <div className="ml-4 w-60">
           <LinkButton href={`/edit/${docId}/`} text="編集する" />
         </div>
       </div>
+      {showDeleteModal && (
+        <Modal
+          onClose={() => {
+            setShowDeleteModal(false);
+          }}
+        >
+          <div className="flex flex-col justify-center items-center">
+            <div className="text-lg font-bold">
+              テイスティングノートを削除してよろしいですか？
+            </div>
+            <div className="mt-2 w-60">
+              <Button
+                type="button"
+                color="black"
+                onClick={async () => {
+                  await deleteNote(signInUser.uid, docId);
+                  if (noteData.images.length > 0) {
+                    await deleteImage(noteData.images[0]);
+                  }
+                  setShowDeleteModal(false);
+                  setDoneDelete(true);
+                }}
+                text="削除する"
+              />
+            </div>
+          </div>
+        </Modal>
+      )}
+      {doneDelete && (
+        <Modal>
+          <div className="flex flex-col justify-center items-center">
+            <div className="text-lg font-bold">
+              テイスティングノートを削除しました
+            </div>
+            <div className="mt-2 w-60">
+              <LinkButton href="/list/" text="一覧画面に戻る" />
+            </div>
+          </div>
+        </Modal>
+      )}
     </>
   );
 };
