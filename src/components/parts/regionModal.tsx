@@ -56,6 +56,7 @@ export const RegionModal: React.FC<DistilleryModalProps> = (props) => {
           <div className="w-full">
             <Button
               type="button"
+              color="white"
               text="選択しない"
               onClick={() => {
                 reset({ region: '' });
@@ -65,7 +66,7 @@ export const RegionModal: React.FC<DistilleryModalProps> = (props) => {
             />
           </div>
           <div className="ml-6 w-full">
-            <Button type="submit" text="決定" />
+            <Button type="submit" color="white" text="決定" />
           </div>
         </div>
       </form>

@@ -102,7 +102,7 @@ const SignIn = () => {
             />
           </div>
           <div className="mt-8">
-            <Button type="submit" text="登録する" />
+            <Button type="submit" color="white" text="登録する" />
           </div>
         </form>
       </div>
