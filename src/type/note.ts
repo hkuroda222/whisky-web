@@ -5,6 +5,7 @@ export type NoteType = {
   bottler?: string;
   caskNum?: number | null;
   comment?: string;
+  createdAt?: number;
   date: number;
   distilleryName?: string;
   docId?: string;
@@ -16,7 +17,6 @@ export type NoteType = {
   taste?: string;
   type?: string;
   uid: string;
-  // todo: 型付け
   updatedAt?: any;
   vintage?: number | null;
 };
@@ -27,9 +27,9 @@ export type InitialInputType = {
   alc: string;
   bottled: string;
   bottler: string;
-  brand?: string;
   caskNum: string;
   comment: string;
+  createdAt?: number;
   date: Date;
   distilleryName: string;
   finish: string;

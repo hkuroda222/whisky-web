@@ -114,7 +114,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
       taste: data.taste,
       type: data.type,
       uid: signInUser.uid,
-      updatedAt: new Date(),
+      updatedAt: new Date().getTime(),
       vintage: data.vintage ? Number(data.vintage) : null,
     };
 
