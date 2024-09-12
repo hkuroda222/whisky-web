@@ -16,30 +16,12 @@ import { Modal } from '@/components/parts/modal';
 import { addNote, uploadImage } from '@/libs/firebase/api/note';
 import { useAuth } from '@/libs/hooks/useAuth';
 import { useModal } from '@/libs/hooks/useModal';
-
-type InitialInputType = {
-  aging: string;
-  alc: string;
-  bottled: string;
-  bottler: string;
-  brand: string;
-  caskNum: string;
-  comment: string;
-  date: Date;
-  distilleryName: string;
-  finish: string;
-  imageFiles: Array<File>;
-  nose: string;
-  rating: number;
-  region: string;
-  taste: string;
-  type: string;
-  vintage: string;
-};
+import { InitialInputType } from '@/type/note';
 
 const Register = () => {
   const signInUser = useAuth();
   const [imagePreview, setImagePreview] = useState<string>('');
+  const [imageFiles, setImageFiles] = useState<Array<File>>([]);
   const [doneSubmit, setDoneSubmit] = useState<boolean>(false);
   const { isOpen, openModal, closeModal } = useModal();
 
@@ -56,13 +38,12 @@ const Register = () => {
       alc: '',
       bottled: '',
       bottler: '',
-      brand: '',
       caskNum: '',
       comment: '',
       date: new Date(),
       distilleryName: '',
       finish: '',
-      imageFiles: [],
+      images: [],
       nose: '',
       rating: 0,
       region: '',
@@ -80,8 +61,8 @@ const Register = () => {
       bottler: data.bottler,
       caskNum: data.caskNum ? Number(data.caskNum) : null,
       comment: data.comment,
-      createdAt: new Date(),
-      date: data.date,
+      createdAt: new Date().getTime(),
+      date: data.date.getTime() / 1000,
       distilleryName: data.distilleryName,
       finish: data.finish,
       nose: data.nose,
@@ -92,8 +73,8 @@ const Register = () => {
       uid: signInUser.uid,
       vintage: data.vintage ? Number(data.vintage) : null,
     };
-    if (data.imageFiles.length > 0) {
-      const imageUrl = await uploadImage(data.imageFiles[0]);
+    if (imageFiles.length > 0) {
+      const imageUrl = await uploadImage(imageFiles[0]);
       await addNote({ ...validateData, images: new Array(imageUrl) });
       setDoneSubmit(true);
     } else {
@@ -107,7 +88,7 @@ const Register = () => {
     if (selectedFile) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setValue('imageFiles', [selectedFile]);
+        setImageFiles([selectedFile]);
         setImagePreview(reader.result as string);
       };
       reader.readAsDataURL(selectedFile);

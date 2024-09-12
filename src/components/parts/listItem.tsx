@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Rating } from '@/components/parts/rating';
+import { formatDate } from '@/libs/function/formatDate';
 import { NoteType } from '@/type/note';
 
 type ListItemProps = {
@@ -9,7 +10,7 @@ type ListItemProps = {
 };
 export const ListItem = (props: ListItemProps) => {
   const { data, index } = props;
-  const date = new Date(data.date.toDate());
+  const date = new Date(data.date * 1000);
   return (
     <li
       className="block [&:nth-child(n+2)]:mt-4"
@@ -19,9 +20,7 @@ export const ListItem = (props: ListItemProps) => {
       }}
     >
       <Link href={`/detail/${data.docId}`} className="block">
-        <span className="block font-bold text-lg">{`${date.getFullYear()}年${
-          date.getMonth() + 1
-        }月${date.getDate()}日`}</span>
+        <span className="block font-bold text-lg">{formatDate(date)}</span>
         <div className="flex mt-2">
           <Image
             src={

@@ -6,6 +6,7 @@ import { Rating } from '@/components/parts/rating';
 import { Modal } from '@/components/parts/modal';
 import { getNote, deleteNote, deleteImage } from '@/libs/firebase/api/note';
 import { useAuth } from '@/libs/hooks/useAuth';
+import { formatDate } from '@/libs/function/formatDate';
 import { NoteType } from '@/type/note';
 
 const DetailPage = ({ params }: { params: { docId: string } }) => {
@@ -19,7 +20,7 @@ const DetailPage = ({ params }: { params: { docId: string } }) => {
     bottled: null,
     bottler: '',
     comment: '',
-    date: '',
+    date: new Date().getTime(),
     distilleryName: '',
     docId: '',
     finish: '',
@@ -68,6 +69,10 @@ const DetailPage = ({ params }: { params: { docId: string } }) => {
               readOnly
               withLabel
             />
+          </div>
+          <div className="mt-2">
+            <div className="font-bold">飲んだ日付</div>
+            <div>{formatDate(new Date(noteData.date * 1000))}</div>
           </div>
         </div>
       </div>

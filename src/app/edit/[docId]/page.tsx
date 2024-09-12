@@ -13,7 +13,7 @@ import { Rating } from '@/components/parts/rating';
 import { Loading } from '@/components/parts/loading';
 import { RegionModal } from '@/components/parts/regionModal';
 import { Modal } from '@/components/parts/modal';
-import { NoteType } from '@/type/note';
+import { NoteType, InitialInputType } from '@/type/note';
 import {
   getNote,
   uploadImage,
@@ -22,25 +22,6 @@ import {
 } from '@/libs/firebase/api/note';
 import { useAuth } from '@/libs/hooks/useAuth';
 import { useModal } from '@/libs/hooks/useModal';
-
-type InitialInputType = {
-  aging: string;
-  alc: string;
-  bottled: string;
-  bottler: string;
-  caskNum: string;
-  comment: string;
-  date: Date;
-  distilleryName: string;
-  finish: string;
-  imageFiles: Array<string>;
-  nose: string;
-  rating: number;
-  region: string;
-  taste: string;
-  type: string;
-  vintage: string;
-};
 
 const initialDataTemplate = {
   aging: '',
@@ -52,7 +33,7 @@ const initialDataTemplate = {
   date: new Date(),
   distilleryName: '',
   finish: '',
-  imageFiles: [],
+  images: [],
   nose: '',
   rating: 0,
   region: '',
@@ -93,12 +74,12 @@ export default function EditPage({ params }: { params: { docId: string } }) {
           bottler: noteData.bottler ? noteData.bottler : '',
           caskNum: noteData.caskNum ? String(noteData.caskNum) : '',
           comment: noteData.comment ? noteData.comment : '',
-          date: new Date(noteData.date.toDate()),
+          date: new Date(noteData.date * 1000),
           distilleryName: noteData.distilleryName
             ? noteData.distilleryName
             : '',
           finish: noteData.finish ? noteData.finish : '',
-          imageFiles: noteData.images,
+          images: noteData.images,
           nose: noteData.nose ? noteData.nose : '',
           rating: noteData.rating ? noteData.rating : 0,
           region: noteData.region ? noteData.region : '',
@@ -123,7 +104,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
       bottler: data.bottler,
       caskNum: data.caskNum ? Number(data.caskNum) : null,
       comment: data.comment,
-      date: data.date,
+      date: data.date.getTime() / 1000,
       distilleryName: data.distilleryName,
       finish: data.finish,
       images: [],
@@ -133,7 +114,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
       taste: data.taste,
       type: data.type,
       uid: signInUser.uid,
-      updatedAt: new Date(),
+      updatedAt: new Date().getTime(),
       vintage: data.vintage ? Number(data.vintage) : null,
     };
 
@@ -142,8 +123,8 @@ export default function EditPage({ params }: { params: { docId: string } }) {
     if (isChangedImage) {
       const imageUrl = await uploadImage(changedImage[0]);
       await updateNote({ ...validateData, images: new Array(imageUrl) }, docId);
-      if (initialData.imageFiles.length > 0) {
-        await deleteImage(initialData.imageFiles[0]);
+      if (initialData.images.length > 0) {
+        await deleteImage(initialData.images[0]);
       }
       setDoneSubmit(true);
     } else {
