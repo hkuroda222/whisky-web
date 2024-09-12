@@ -8,7 +8,7 @@ import { ja } from 'date-fns/locale/ja';
 
 registerLocale('ja', ja);
 
-const CustomInput = forwardRef(
+const CustomInput: React.FC<InputHTMLAttributes<HTMLInputElement>> = forwardRef(
   (
     props: InputHTMLAttributes<HTMLInputElement>,
     ref: ForwardedRef<HTMLInputElement>
