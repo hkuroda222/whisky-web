@@ -58,7 +58,7 @@ export const DistilleryModal: React.FC<DistilleryModalProps> = (props) => {
           </div>
         </div>
         <div className="mt-4">
-          <Button type="submit" text="決定" />
+          <Button type="submit" color="white" text="決定" />
         </div>
       </form>
     </Modal>
