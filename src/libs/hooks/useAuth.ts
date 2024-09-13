@@ -6,23 +6,23 @@ import { signInUserAtom } from '@/recoil/atom/signInuserAtom';
 import { auth } from '@/libs/firebase/config';
 
 export const useAuth = () => {
-  const [signInUser, setSignInUser] = useRecoilState(signInUserAtom);
-  const resetStatus = useResetRecoilState(signInUserAtom);
-  const router = useRouter();
+	const [signInUser, setSignInUser] = useRecoilState(signInUserAtom);
+	const resetStatus = useResetRecoilState(signInUserAtom);
+	const router = useRouter();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setSignInUser({
-          uid: user.uid,
-        });
-      } else {
-        resetStatus();
-        router.push('/');
-      }
-    });
-    return () => unsubscribe();
-  }, [setSignInUser, resetStatus, router]);
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			if (user) {
+				setSignInUser({
+					uid: user.uid,
+				});
+			} else {
+				resetStatus();
+				router.push('/');
+			}
+		});
+		return () => unsubscribe();
+	}, [setSignInUser, resetStatus, router]);
 
-  return signInUser;
+	return signInUser;
 };
