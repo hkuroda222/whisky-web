@@ -1,10 +1,10 @@
-'use client';
-import { useRouter } from 'next/navigation';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { InputItem } from '@/components/elements/input';
-import { Button } from '@/components/elements/button';
-import { Loading } from '@/components/parts/loading';
-import { signUpWithEmail } from '@/libs/firebase/api/auth';
+"use client";
+import { useRouter } from "next/navigation";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { InputItem } from "@/components/elements/input";
+import { Button } from "@/components/elements/button";
+import { Loading } from "@/components/parts/loading";
+import { signUpWithEmail } from "@/libs/firebase/api/auth";
 
 type InitialInputType = {
   mail: string;
@@ -21,9 +21,9 @@ const SignIn = () => {
     formState: { isSubmitting },
   } = useForm<InitialInputType>({
     defaultValues: {
-      mail: '',
-      pass: '',
-      confirmPass: '',
+      mail: "",
+      pass: "",
+      confirmPass: "",
     },
   });
 
@@ -33,7 +33,7 @@ const SignIn = () => {
       pass: data.pass,
     });
     if (user) {
-      router.push('list');
+      router.push("list");
     }
   };
 
@@ -49,15 +49,15 @@ const SignIn = () => {
               name="mail"
               control={control}
               rules={{
-                required: 'メールアドレスは必須です',
+                required: "メールアドレスは必須です",
                 maxLength: {
                   value: 30,
-                  message: '文字数は30文字以内です。',
+                  message: "文字数は30文字以内です。",
                 },
                 pattern: {
                   value:
                     /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
-                  message: 'メールアドレスの入力形式が間違っています。',
+                  message: "メールアドレスの入力形式が間違っています。",
                 },
               }}
               label="メールアドレス"
@@ -70,14 +70,14 @@ const SignIn = () => {
               name="pass"
               control={control}
               rules={{
-                required: 'パスワードは必須です。',
+                required: "パスワードは必須です。",
                 maxLength: {
                   value: 20,
-                  message: '半角英数字6~20文字以内です。',
+                  message: "半角英数字6~20文字以内です。",
                 },
                 pattern: {
                   value: /^(?=.*?[a-z])(?=.*?\d)[a-z\d]{6,20}$/i,
-                  message: 'パスワードは半角英数字6~20文字以内です。',
+                  message: "パスワードは半角英数字6~20文字以内です。",
                 },
               }}
               label="パスワード"
@@ -90,10 +90,10 @@ const SignIn = () => {
               name="confirmPass"
               control={control}
               rules={{
-                required: '確認用パスワードは必須です。',
+                required: "確認用パスワードは必須です。",
                 validate: (value) => {
                   return (
-                    value === getValues('pass') || 'パスワードが一致しません'
+                    value === getValues("pass") || "パスワードが一致しません"
                   );
                 },
               }}

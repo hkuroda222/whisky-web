@@ -1,17 +1,17 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-} from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
-import { db } from '@/libs/firebase/config';
-import { auth } from '@/libs/firebase/config';
+} from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/libs/firebase/config";
+import { auth } from "@/libs/firebase/config";
 
 export const signInWithEmail = async (args: { mail: string; pass: string }) => {
   try {
     const user = await signInWithEmailAndPassword(auth, args.mail, args.pass);
     return user;
   } catch (error) {
-    alert('サインイン認証に失敗しました。');
+    alert("サインイン認証に失敗しました。");
     return false;
   }
 };
@@ -23,7 +23,7 @@ export const signUpWithEmail = async (args: { mail: string; pass: string }) => {
       args.mail,
       args.pass
     ).then(async (userCredential) => {
-      const ref = doc(db, 'users', userCredential.user.uid);
+      const ref = doc(db, "users", userCredential.user.uid);
       await setDoc(ref, {
         uid: userCredential.user.uid,
         email: userCredential.user.email,
@@ -32,7 +32,7 @@ export const signUpWithEmail = async (args: { mail: string; pass: string }) => {
     });
     return user;
   } catch (error) {
-    alert('ユーザー登録に失敗しました。');
+    alert("ユーザー登録に失敗しました。");
     return false;
   }
 };
@@ -41,7 +41,7 @@ export const signOut = async () => {
   try {
     await auth.signOut();
   } catch (error) {
-    alert('サインアウトに失敗しました。');
+    alert("サインアウトに失敗しました。");
   }
 };
 
@@ -52,6 +52,6 @@ export const deleteAccount = async () => {
       await user.delete();
     }
   } catch (error) {
-    alert('アカウントの削除に失敗しました。');
+    alert("アカウントの削除に失敗しました。");
   }
 };

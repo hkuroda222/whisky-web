@@ -1,20 +1,20 @@
-'use client';
-import Link from 'next/link';
-import { useRef, ChangeEvent } from 'react';
+"use client";
+import Link from "next/link";
+import { useRef, type ChangeEvent } from "react";
 
 type ButtonProps = {
-  type?: 'submit' | 'button';
-  color: 'white' | 'black';
+  type?: "submit" | "button";
+  color: "white" | "black";
   onClick?: () => void;
   text: string;
   disabled?: boolean;
 };
 export const Button: React.FC<ButtonProps> = (props) => {
-  const { type = 'button', color, onClick, text, disabled } = props;
+  const { type = "button", color, onClick, text, disabled } = props;
 
   const colorClasses = {
-    white: 'bg-white text-black',
-    black: 'bg-black text-white',
+    white: "bg-white text-black",
+    black: "bg-black text-white",
   };
 
   return (
@@ -23,7 +23,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
       onClick={onClick}
       disabled={disabled}
       className={`w-full p-2 h-12 rounded-md border-solid border-2 ${
-        disabled ? 'opacity-50' : ''
+        disabled ? "opacity-50" : ""
       }
       ${colorClasses[color]}`}
     >
@@ -43,7 +43,7 @@ export const LinkButton: React.FC<LinkButtonProps> = (props) => {
     <Link
       href={href}
       className={`flex justify-center items-center max-w-60 w-full p-2 h-12 bg-white rounded-md border-solid border-2 ${
-        isBold ? 'font-bold' : 'font-nomal'
+        isBold ? "font-bold" : "font-nomal"
       }`}
     >
       {text}

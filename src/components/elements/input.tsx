@@ -1,18 +1,18 @@
-import { ChangeEvent } from 'react';
+import type { ChangeEvent } from "react";
 import {
-  FieldValues,
+  type FieldValues,
   useController,
-  UseControllerProps,
-} from 'react-hook-form';
+  type UseControllerProps,
+} from "react-hook-form";
 
 type InputProps = {
-  type: 'text' | 'email' | 'password';
+  type: "text" | "email" | "password";
   value: string | number | undefined;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   label: string;
   placeholder: string;
   onClick?: () => void;
-  inputMode?: 'text' | 'numeric';
+  inputMode?: "text" | "numeric";
   disabled?: boolean;
   readOnly?: boolean;
   isBold?: boolean;
@@ -27,7 +27,7 @@ export const Input: React.FC<InputProps> = (props) => {
     label,
     placeholder,
     onClick,
-    inputMode = 'text',
+    inputMode = "text",
     disabled = false,
     readOnly = false,
     isBold = false,
@@ -37,7 +37,7 @@ export const Input: React.FC<InputProps> = (props) => {
     <div className="flex flex-col justify-center">
       <label
         htmlFor={label}
-        className={`${isBold ? 'font-bold' : 'font-normal'}`}
+        className={`${isBold ? "font-bold" : "font-normal"}`}
       >
         {label}
       </label>
@@ -61,10 +61,10 @@ export const Input: React.FC<InputProps> = (props) => {
 };
 
 type InputItemProps = {
-  type: 'text' | 'email' | 'password' | 'textarea';
+  type: "text" | "email" | "password" | "textarea";
   label: string;
   placeholder: string;
-  inputMode?: 'text' | 'numeric';
+  inputMode?: "text" | "numeric";
   isBold?: boolean;
   cols?: number;
   unit?: string;
@@ -80,7 +80,7 @@ export const InputItem = <T extends FieldValues>(
     type,
     label,
     placeholder,
-    inputMode = 'text',
+    inputMode = "text",
     isBold = false,
     cols = 20,
     unit,
@@ -95,12 +95,12 @@ export const InputItem = <T extends FieldValues>(
     <div className="flex flex-col justify-center">
       <label
         htmlFor={label}
-        className={`${isBold ? 'font-bold' : 'font-normal'}`}
+        className={`${isBold ? "font-bold" : "font-normal"}`}
       >
         {label}
       </label>
       <div className="flex items-center w-full">
-        {type === 'textarea' ? (
+        {type === "textarea" ? (
           <textarea
             id={label}
             placeholder={placeholder}

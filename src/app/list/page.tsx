@@ -1,12 +1,12 @@
-'use client';
-import { useState, useEffect, useCallback } from 'react';
-import { QueryDocumentSnapshot } from 'firebase/firestore';
-import { LinkButton, FloatingButton } from '@/components/elements/button';
-import { ListItem } from '@/components/parts/listItem';
-import { Loading } from '@/components/parts/loading';
-import { useAuth } from '@/libs/hooks/useAuth';
-import { getNoteList, getNextList } from '@/libs/firebase/api/note';
-import { NoteType } from '@/type/note';
+"use client";
+import { useState, useEffect, useCallback } from "react";
+import type { QueryDocumentSnapshot } from "firebase/firestore";
+import { LinkButton, FloatingButton } from "@/components/elements/button";
+import { ListItem } from "@/components/parts/listItem";
+import { Loading } from "@/components/parts/loading";
+import { useAuth } from "@/libs/hooks/useAuth";
+import { getNoteList, getNextList } from "@/libs/firebase/api/note";
+import type { NoteType } from "@/type/note";
 
 const LIST_LIMIT = 10;
 
@@ -53,8 +53,8 @@ const ListPage = () => {
   }, [isLoading, lastVisible, hasMore]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
   useEffect(() => {

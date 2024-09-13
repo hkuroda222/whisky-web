@@ -1,5 +1,6 @@
-'use client';
-import React, { useState, useEffect } from 'react';
+"use client";
+import type React from "react";
+import { useState, useEffect } from "react";
 
 type RatingProps = {
   rating: number;
@@ -14,7 +15,7 @@ export const Rating = (props: RatingProps) => {
   const {
     rating,
     size = 24,
-    color = '#f9ce20',
+    color = "#f9ce20",
     readOnly = false,
     withLabel = false,
     onClick,
@@ -73,7 +74,7 @@ export const Rating = (props: RatingProps) => {
       <div
         className="relative inline-block select-none items-center"
         style={{
-          cursor: readOnly ? 'auto' : 'pointer',
+          cursor: readOnly ? "auto" : "pointer",
         }}
         onMouseLeave={() => {
           setIsHovered(false);
@@ -106,7 +107,7 @@ export const Rating = (props: RatingProps) => {
             width: isHovered
               ? `${hoverValue * 2 * 10}%`
               : `${clickValue * 2 * 10}%`,
-            pointerEvents: 'none',
+            pointerEvents: "none",
           }}
         >
           {arr.map((num: number) => {

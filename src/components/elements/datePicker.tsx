@@ -1,12 +1,12 @@
-'use client';
-import { forwardRef, ForwardedRef, InputHTMLAttributes } from 'react';
+"use client";
+import { forwardRef, type ForwardedRef, type InputHTMLAttributes } from "react";
 import DatePicker, {
-  ReactDatePickerProps,
+  type ReactDatePickerProps,
   registerLocale,
-} from 'react-datepicker';
-import { ja } from 'date-fns/locale/ja';
+} from "react-datepicker";
+import { ja } from "date-fns/locale/ja";
 
-registerLocale('ja', ja);
+registerLocale("ja", ja);
 
 const CustomInput: React.FC<InputHTMLAttributes<HTMLInputElement>> = forwardRef(
   (
@@ -16,7 +16,7 @@ const CustomInput: React.FC<InputHTMLAttributes<HTMLInputElement>> = forwardRef(
     return <input {...props} ref={ref} readOnly />;
   }
 );
-CustomInput.displayName = 'CustomInput';
+CustomInput.displayName = "CustomInput";
 
 export const DatePickerInput: React.FC<ReactDatePickerProps> = (props) => {
   return (

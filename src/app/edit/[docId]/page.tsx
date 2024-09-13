@@ -1,45 +1,45 @@
-'use client';
-import Image from 'next/image';
-import { useState, useEffect, ChangeEvent } from 'react';
-import { SubmitHandler, useForm, Controller } from 'react-hook-form';
-import { Input, InputItem } from '@/components/elements/input';
+"use client";
+import Image from "next/image";
+import { useState, useEffect, type ChangeEvent } from "react";
+import { type SubmitHandler, useForm, Controller } from "react-hook-form";
+import { Input, InputItem } from "@/components/elements/input";
 import {
   Button,
   LinkButton,
   ButtonWithFileInput,
-} from '@/components/elements/button';
-import { DatePickerInput } from '@/components/elements/datePicker';
-import { Rating } from '@/components/parts/rating';
-import { Loading } from '@/components/parts/loading';
-import { RegionModal } from '@/components/parts/regionModal';
-import { Modal } from '@/components/parts/modal';
-import { NoteType, InitialInputType } from '@/type/note';
+} from "@/components/elements/button";
+import { DatePickerInput } from "@/components/elements/datePicker";
+import { Rating } from "@/components/parts/rating";
+import { Loading } from "@/components/parts/loading";
+import { RegionModal } from "@/components/parts/regionModal";
+import { Modal } from "@/components/parts/modal";
+import type { NoteType, InitialInputType } from "@/type/note";
 import {
   getNote,
   uploadImage,
   updateNote,
   deleteImage,
-} from '@/libs/firebase/api/note';
-import { useAuth } from '@/libs/hooks/useAuth';
-import { useModal } from '@/libs/hooks/useModal';
+} from "@/libs/firebase/api/note";
+import { useAuth } from "@/libs/hooks/useAuth";
+import { useModal } from "@/libs/hooks/useModal";
 
 const initialDataTemplate = {
-  aging: '',
-  alc: '',
-  bottled: '',
-  bottler: '',
-  caskNum: '',
-  comment: '',
+  aging: "",
+  alc: "",
+  bottled: "",
+  bottler: "",
+  caskNum: "",
+  comment: "",
   date: new Date(),
-  distilleryName: '',
-  finish: '',
+  distilleryName: "",
+  finish: "",
   images: [],
-  nose: '',
+  nose: "",
   rating: 0,
-  region: '',
-  taste: '',
-  type: '',
-  vintage: '',
+  region: "",
+  taste: "",
+  type: "",
+  vintage: "",
 };
 
 export default function EditPage({ params }: { params: { docId: string } }) {
@@ -47,7 +47,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
   const signInUser = useAuth();
   const [initialData, setInitialData] =
     useState<InitialInputType>(initialDataTemplate);
-  const [imagePreview, setImagePreview] = useState<string>('');
+  const [imagePreview, setImagePreview] = useState<string>("");
   const [changedImage, setChangedImage] = useState<Array<File>>([]);
   const [doneSubmit, setDoneSubmit] = useState<boolean>(false);
   const { isOpen, openModal, closeModal } = useModal();
@@ -68,24 +68,24 @@ export default function EditPage({ params }: { params: { docId: string } }) {
       if (docId && signInUser.uid) {
         const noteData = await getNote(signInUser.uid, docId);
         setInitialData({
-          aging: noteData.aging ? String(noteData.aging) : '',
-          alc: noteData.alc ? String(noteData.alc) : '',
-          bottled: noteData.bottled ? String(noteData.bottled) : '',
-          bottler: noteData.bottler ? noteData.bottler : '',
-          caskNum: noteData.caskNum ? String(noteData.caskNum) : '',
-          comment: noteData.comment ? noteData.comment : '',
+          aging: noteData.aging ? String(noteData.aging) : "",
+          alc: noteData.alc ? String(noteData.alc) : "",
+          bottled: noteData.bottled ? String(noteData.bottled) : "",
+          bottler: noteData.bottler ? noteData.bottler : "",
+          caskNum: noteData.caskNum ? String(noteData.caskNum) : "",
+          comment: noteData.comment ? noteData.comment : "",
           date: new Date(noteData.date * 1000),
           distilleryName: noteData.distilleryName
             ? noteData.distilleryName
-            : '',
-          finish: noteData.finish ? noteData.finish : '',
+            : "",
+          finish: noteData.finish ? noteData.finish : "",
           images: noteData.images,
-          nose: noteData.nose ? noteData.nose : '',
+          nose: noteData.nose ? noteData.nose : "",
           rating: noteData.rating ? noteData.rating : 0,
-          region: noteData.region ? noteData.region : '',
-          taste: noteData.taste ? noteData.taste : '',
-          type: noteData.type ? noteData.type : '',
-          vintage: noteData.vintage ? String(noteData.vintage) : '',
+          region: noteData.region ? noteData.region : "",
+          taste: noteData.taste ? noteData.taste : "",
+          type: noteData.type ? noteData.type : "",
+          vintage: noteData.vintage ? String(noteData.vintage) : "",
         });
         setImagePreview(noteData.images[0]);
       }
@@ -178,10 +178,10 @@ export default function EditPage({ params }: { params: { docId: string } }) {
               name="distilleryName"
               control={control}
               rules={{
-                required: '蒸留所名 / ブランドは必須です',
+                required: "蒸留所名 / ブランドは必須です",
                 maxLength: {
                   value: 30,
-                  message: '文字数は30文字以内です。',
+                  message: "文字数は30文字以内です。",
                 },
               }}
               label="・蒸留所名 / ブランド"
@@ -192,9 +192,9 @@ export default function EditPage({ params }: { params: { docId: string } }) {
           <div className="mt-4">
             <Input
               type="text"
-              value={getValues('region')}
+              value={getValues("region")}
               onChange={(e) => {
-                setValue('region', e.target.value);
+                setValue("region", e.target.value);
               }}
               label="・地域"
               placeholder="地域を選択してください"
@@ -211,7 +211,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
               rules={{
                 maxLength: {
                   value: 30,
-                  message: '文字数は30文字以内です。',
+                  message: "文字数は30文字以内です。",
                 },
               }}
               label="・ボトラー"
@@ -227,7 +227,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
               rules={{
                 maxLength: {
                   value: 4,
-                  message: '文字数は4文字以内です。',
+                  message: "文字数は4文字以内です。",
                 },
               }}
               label="・蒸溜年"
@@ -245,7 +245,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
               rules={{
                 maxLength: {
                   value: 4,
-                  message: '文字数は4文字以内です。',
+                  message: "文字数は4文字以内です。",
                 },
               }}
               label="・瓶詰め"
@@ -263,7 +263,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
               rules={{
                 maxLength: {
                   value: 2,
-                  message: '文字数は2文字以内です。',
+                  message: "文字数は2文字以内です。",
                 },
               }}
               label="・熟成年数"
@@ -281,7 +281,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
               rules={{
                 maxLength: {
                   value: 5,
-                  message: '文字数は5文字以内です。',
+                  message: "文字数は5文字以内です。",
                 },
               }}
               label="・アルコール度数"
@@ -299,7 +299,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
               rules={{
                 maxLength: {
                   value: 10,
-                  message: '文字数は10文字以内です。',
+                  message: "文字数は10文字以内です。",
                 },
               }}
               label="・カスクナンバー"
@@ -317,7 +317,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
               rules={{
                 maxLength: {
                   value: 30,
-                  message: '文字数は30文字以内です。',
+                  message: "文字数は30文字以内です。",
                 },
               }}
               label="・樽の種類"
@@ -332,9 +332,9 @@ export default function EditPage({ params }: { params: { docId: string } }) {
         <div>
           <span className="block mt-4 font-bold">・評価</span>
           <Rating
-            rating={getValues('rating')}
+            rating={getValues("rating")}
             onClick={(value) => {
-              setValue('rating', value);
+              setValue("rating", value);
             }}
             size={28}
             withLabel
@@ -349,7 +349,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
             rules={{
               maxLength: {
                 value: 500,
-                message: '文字数は500文字以内です。',
+                message: "文字数は500文字以内です。",
               },
             }}
             placeholder="香りを入力してください"
@@ -365,7 +365,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
             rules={{
               maxLength: {
                 value: 500,
-                message: '文字数は500文字以内です。',
+                message: "文字数は500文字以内です。",
               },
             }}
             placeholder="味を入力してください"
@@ -381,7 +381,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
             rules={{
               maxLength: {
                 value: 500,
-                message: '文字数は500文字以内です。',
+                message: "文字数は500文字以内です。",
               },
             }}
             placeholder="余韻を入力してください"
@@ -397,7 +397,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
             rules={{
               maxLength: {
                 value: 500,
-                message: '文字数は500文字以内です。',
+                message: "文字数は500文字以内です。",
               },
             }}
             placeholder="総評を入力してください"
@@ -431,11 +431,11 @@ export default function EditPage({ params }: { params: { docId: string } }) {
         <RegionModal
           closeModal={closeModal}
           onSubmit={(data: { region: string }) => {
-            setValue('region', data.region);
+            setValue("region", data.region);
             closeModal();
           }}
-          resetValue={() => reset({ region: '' })}
-          value={getValues('region')}
+          resetValue={() => reset({ region: "" })}
+          value={getValues("region")}
         />
       )}
       {doneSubmit && (

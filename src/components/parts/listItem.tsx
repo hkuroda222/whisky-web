@@ -1,8 +1,8 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { Rating } from '@/components/parts/rating';
-import { formatDate } from '@/libs/function/formatDate';
-import { NoteType } from '@/type/note';
+import Image from "next/image";
+import Link from "next/link";
+import { Rating } from "@/components/parts/rating";
+import { formatDate } from "@/libs/function/formatDate";
+import type { NoteType } from "@/type/note";
 
 type ListItemProps = {
   data: NoteType;
@@ -15,8 +15,8 @@ export const ListItem = (props: ListItemProps) => {
     <li
       className="block [&:nth-child(n+2)]:mt-4"
       style={{
-        borderTop: index > 0 ? '2px solid #e5e7eb' : 'none',
-        paddingTop: index > 0 ? '1rem' : 'none',
+        borderTop: index > 0 ? "2px solid #e5e7eb" : "none",
+        paddingTop: index > 0 ? "1rem" : "none",
       }}
     >
       <Link href={`/detail/${data.docId}`} className="block">
@@ -24,7 +24,7 @@ export const ListItem = (props: ListItemProps) => {
         <div className="flex mt-2">
           <Image
             src={
-              data.images.length > 0 ? data.images[0] : '/images/default.png'
+              data.images.length > 0 ? data.images[0] : "/images/default.png"
             }
             alt="ボトル画像"
             width={200}
@@ -35,7 +35,7 @@ export const ListItem = (props: ListItemProps) => {
           <div className="ml-4">
             <span className="block font-bold text-lg">
               {data.distilleryName}
-              {data.aging && data.aging > 0 && `${data.aging + '年'}`}
+              {data.aging && data.aging > 0 && `${data.aging + "年"}`}
             </span>
             <span className="block font-medium">{data.bottler}</span>
             {data.vintage && data.vintage > 0 && (

@@ -17,7 +17,7 @@ export type NoteType = {
   taste?: string;
   type?: string;
   uid: string;
-  updatedAt?: any;
+  updatedAt?: number;
   vintage?: number | null;
 };
 

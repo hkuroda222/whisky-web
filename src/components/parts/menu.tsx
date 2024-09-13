@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/elements/button';
-import { Modal } from '@/components/parts/modal';
-import { signOut, deleteAccount } from '@/libs/firebase/api/auth';
+import type React from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/elements/button";
+import { Modal } from "@/components/parts/modal";
+import { signOut, deleteAccount } from "@/libs/firebase/api/auth";
 
 export const HamburgerMenu: React.FC = () => {
   const router = useRouter();
@@ -29,7 +30,7 @@ export const HamburgerMenu: React.FC = () => {
         </div>
         <div
           className={`fixed z-50 top-0 right-0 h-full w-64 bg-white border-l transform ${
-            isOpen ? 'translate-x-0' : 'translate-x-full'
+            isOpen ? "translate-x-0" : "translate-x-full"
           } transition-transform duration-300 ease-in-out`}
         >
           <div
@@ -42,7 +43,7 @@ export const HamburgerMenu: React.FC = () => {
             <li
               onClick={async () => {
                 await signOut();
-                router.push('/');
+                router.push("/");
               }}
               className="block px-4 py-2 border-t-2 text-gray-800 cursor-pointer hover:bg-gray-200"
             >
@@ -83,7 +84,7 @@ export const HamburgerMenu: React.FC = () => {
                 onClick={async () => {
                   toggleMenu();
                   deleteAccount();
-                  router.push('/');
+                  router.push("/");
                 }}
                 text="削除する"
               />

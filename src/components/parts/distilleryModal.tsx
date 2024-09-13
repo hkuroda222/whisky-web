@@ -1,8 +1,8 @@
-'use client';
-import { useForm } from 'react-hook-form';
-import { Button } from '@/components/elements/button';
-import { Modal } from '@/components/parts/modal';
-import { SCOTCH } from '@/libs/data/distillery';
+"use client";
+import { useForm } from "react-hook-form";
+import { Button } from "@/components/elements/button";
+import { Modal } from "@/components/parts/modal";
+import { SCOTCH } from "@/libs/data/distillery";
 
 type DistilleryModalProps = {
   closeModal: () => void;
@@ -20,7 +20,7 @@ export const DistilleryModal: React.FC<DistilleryModalProps> = (props) => {
 
   const { handleSubmit, register, setValue } = useForm<{
     distillery: string;
-  }>({ defaultValues: { distillery: '' } });
+  }>({ defaultValues: { distillery: "" } });
 
   return (
     <Modal modalTiele="蒸溜所を選択してください" onClose={closeModal}>
@@ -29,7 +29,7 @@ export const DistilleryModal: React.FC<DistilleryModalProps> = (props) => {
           <span className="block font-bold">スペイサイド</span>
           <div className="flex gap-x-3 mt-1">
             {SCOTCH.filter(
-              (elm) => elm.region === 'スペイサイド'
+              (elm) => elm.region === "スペイサイド"
               // todo: 型定義
             ).map((distilleryData: any, i) => {
               return (
@@ -38,9 +38,9 @@ export const DistilleryModal: React.FC<DistilleryModalProps> = (props) => {
                     id={distilleryData.id}
                     type="radio"
                     value={distilleryData.id}
-                    {...register('distillery')}
+                    {...register("distillery")}
                     onChange={(e) => {
-                      setValue('distillery', e.target.value);
+                      setValue("distillery", e.target.value);
                       setDistilleryName(distilleryData.name);
                     }}
                     hidden

@@ -1,9 +1,9 @@
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { useRecoilState, useResetRecoilState } from 'recoil';
-import { onAuthStateChanged } from 'firebase/auth';
-import { signInUserAtom } from '@/recoil/atom/signInuserAtom';
-import { auth } from '@/libs/firebase/config';
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { onAuthStateChanged } from "firebase/auth";
+import { signInUserAtom } from "@/recoil/atom/signInuserAtom";
+import { auth } from "@/libs/firebase/config";
 
 export const useAuth = () => {
   const [signInUser, setSignInUser] = useRecoilState(signInUserAtom);
@@ -18,7 +18,7 @@ export const useAuth = () => {
         });
       } else {
         resetStatus();
-        router.push('/');
+        router.push("/");
       }
     });
     return () => unsubscribe();

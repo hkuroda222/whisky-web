@@ -1,8 +1,8 @@
-'use client';
-import { useForm } from 'react-hook-form';
-import { Button } from '@/components/elements/button';
-import { Modal } from '@/components/parts/modal';
-import { REGION } from '@/libs/data/region';
+"use client";
+import { useForm } from "react-hook-form";
+import { Button } from "@/components/elements/button";
+import { Modal } from "@/components/parts/modal";
+import { REGION } from "@/libs/data/region";
 
 type DistilleryModalProps = {
   closeModal: () => void;
@@ -32,9 +32,9 @@ export const RegionModal: React.FC<DistilleryModalProps> = (props) => {
                         id={region.regionName}
                         type="radio"
                         value={region.regionName}
-                        {...register('region')}
+                        {...register("region")}
                         onChange={(e) => {
-                          setValue('region', e.target.value);
+                          setValue("region", e.target.value);
                         }}
                         hidden
                         className="peer"
@@ -59,7 +59,7 @@ export const RegionModal: React.FC<DistilleryModalProps> = (props) => {
               color="white"
               text="選択しない"
               onClick={() => {
-                reset({ region: '' });
+                reset({ region: "" });
                 resetValue();
                 closeModal();
               }}

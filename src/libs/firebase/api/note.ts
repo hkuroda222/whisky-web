@@ -10,21 +10,21 @@ import {
   addDoc,
   updateDoc,
   startAfter,
-  QueryDocumentSnapshot,
-} from 'firebase/firestore';
+  type QueryDocumentSnapshot,
+} from "firebase/firestore";
 import {
   ref,
   uploadBytes,
   getDownloadURL,
   deleteObject,
-} from 'firebase/storage';
-import { db, storage } from '@/libs/firebase/config';
-import { NoteType } from '@/type/note';
+} from "firebase/storage";
+import { db, storage } from "@/libs/firebase/config";
+import type { NoteType } from "@/type/note";
 
 export const getNoteList = async (uid: string, listLimit: number) => {
   const q = query(
-    collection(db, 'users', uid, 'notes'),
-    orderBy('date', 'desc'),
+    collection(db, "users", uid, "notes"),
+    orderBy("date", "desc"),
     limit(listLimit)
   );
   const snapshot = await getDocs(q);
@@ -42,8 +42,8 @@ export const getNextList = async (
   listLimit: number
 ) => {
   const q = query(
-    collection(db, 'users', uid, 'notes'),
-    orderBy('date', 'desc'),
+    collection(db, "users", uid, "notes"),
+    orderBy("date", "desc"),
     startAfter(lastVisible),
     limit(listLimit)
   );
@@ -57,23 +57,23 @@ export const getNextList = async (
 };
 
 export const getNote = async (uid: string, docId: string) => {
-  const snapShot = await getDoc(doc(db, 'users', uid, 'notes', docId));
+  const snapShot = await getDoc(doc(db, "users", uid, "notes", docId));
   const deta = snapShot.data();
   return deta as NoteType;
 };
 
 export const addNote = async (noteData: NoteType) => {
-  const ref = collection(db, 'users', noteData.uid, 'notes');
+  const ref = collection(db, "users", noteData.uid, "notes");
   await addDoc(ref, noteData);
 };
 
 export const deleteNote = async (uid: string, docId: string) => {
-  const docRef = doc(db, 'users', uid, 'notes', docId);
+  const docRef = doc(db, "users", uid, "notes", docId);
   await deleteDoc(docRef);
 };
 
 export const updateNote = async (noteData: NoteType, docId: string) => {
-  const docRef = doc(db, 'users', noteData.uid, 'notes', docId);
+  const docRef = doc(db, "users", noteData.uid, "notes", docId);
   await updateDoc(docRef, noteData);
 };
 
