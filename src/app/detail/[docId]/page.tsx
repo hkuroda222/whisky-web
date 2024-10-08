@@ -61,7 +61,7 @@ const DetailPage = ({ params }: { params: { docId: string } }) => {
         <div className="ml-4">
           <h1 className="font-bold text-lg">
             {noteData.distilleryName}
-            {noteData.aging && noteData.aging > 0 && `${noteData.aging}'年'`}
+            {noteData.aging && noteData.aging > 0 && `${noteData.aging}年`}
           </h1>
           <div className="mt-2">
             <Rating
