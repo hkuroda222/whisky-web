@@ -9,6 +9,7 @@ export const firebaseConfig = {
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
   storageBucket: "gs://taster-app-5db96.appspot.com",
 };
 
