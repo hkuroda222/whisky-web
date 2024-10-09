@@ -33,7 +33,7 @@ const SignIn = () => {
       pass: data.pass,
     });
     if (user) {
-      router.push("list");
+      router.push("/list");
     }
   };
 
