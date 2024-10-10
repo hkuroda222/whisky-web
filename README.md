@@ -2,7 +2,7 @@
 ウイスキー用テイスティングノート記録アプリ
 
 ## URL
-デプロイ次第、記載
+https://whisky-web.vercel.app
 
 ## 使用技術
 言語 : TypeScript  
