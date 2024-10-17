@@ -107,7 +107,7 @@ export default function EditPage({ params }: { params: { docId: string } }) {
       date: data.date.getTime() / 1000,
       distilleryName: data.distilleryName,
       finish: data.finish,
-      images: [],
+      images: data.images,
       nose: data.nose,
       rating: data.rating,
       region: data.region,
