@@ -29,6 +29,9 @@ const ListPage = () => {
   };
 
   const getNextListData = async () => {
+    console.log("lastVisible", lastVisible);
+    console.log("hasMore", hasMore);
+    console.log("!lastVisible || !hasMore", !lastVisible || !hasMore);
     if (!lastVisible || !hasMore) return;
     const { data, nextLastVisible } = await getNextList(
       signInUser.uid,
@@ -43,7 +46,7 @@ const ListPage = () => {
 
   const handleScroll = useCallback(() => {
     if (
-      window.innerHeight + document.documentElement.scrollTop !==
+      window.innerHeight + Math.ceil(document.documentElement.scrollTop) !==
         document.documentElement.offsetHeight ||
       isLoading
     ) {
