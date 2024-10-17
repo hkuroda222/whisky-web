@@ -42,9 +42,7 @@ export const ListItem = (props: ListItemProps) => {
               <span className="block font-medium">蒸溜: {data.vintage}年</span>
             )}
             {data.bottled && data.bottled > 0 && (
-              <span className="block font-medium">
-                瓶詰め: {data.bottled}年
-              </span>
+              <span className="block font-medium">瓶詰: {data.bottled}年</span>
             )}
             <Rating rating={data.rating ? data.rating : 0} readOnly withLabel />
           </div>
