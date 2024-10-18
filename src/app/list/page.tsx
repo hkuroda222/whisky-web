@@ -29,9 +29,6 @@ const ListPage = () => {
   };
 
   const getNextListData = async () => {
-    console.log("lastVisible", lastVisible);
-    console.log("hasMore", hasMore);
-    console.log("!lastVisible || !hasMore", !lastVisible || !hasMore);
     if (!lastVisible || !hasMore) return;
     const { data, nextLastVisible } = await getNextList(
       signInUser.uid,
