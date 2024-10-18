@@ -4,6 +4,10 @@
 ## URL
 https://whisky-web.vercel.app
 
+動作確認用サンプルアカウント  
+・mail: sample@gmail.com  
+・pass: 12341234ab  
+
 ## 使用技術
 言語 : TypeScript  
 スタイル : tailwind css  
